@@ -24,3 +24,5 @@ FinishChoreIntent i'm done {Chore}
 FinishChoreIntent i completed {Chore}
 FinishChoreIntent i'm finally done {Chore}
 FinishChoreIntent i'm done with {Chore}
+Hal2000Intent open the pod bay doors
+Hal2000Intent open the pod bay doors hal

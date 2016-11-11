@@ -93,6 +93,11 @@ MyNanny.prototype.intentHandlers = {
       response.tell(speechOutput);
     },
 
+    "Hal2000Intent": function (intent, session, response) {
+      var speechOutput = "I'm sorry Dave, I'm afraid I can't do that.";
+      response.tell(speechOutput);
+    },
+
     "AMAZON.HelpIntent": function (intent, session, response) {
         var speechOutput = "You can say things like, I'm home, what are my chores, or, \
             you can say exit... Now, what can I help you with?";

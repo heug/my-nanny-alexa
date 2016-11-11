@@ -24,6 +24,9 @@
     {
       "intent": "PurposeIntent"
     },
+    {
+      "intent": "Hal2000Intent"
+    },
 		{
 			"intent": "AMAZON.HelpIntent"
 		},
