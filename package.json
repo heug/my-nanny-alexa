@@ -10,7 +10,8 @@
     "alexa-verifier": "0.0.5",
     "bluebird": "^2.9.34",
     "body-parser": "~1.0.1",
-    "express": "~4.0.0"
+    "express": "~4.0.0",
+    "jsdoc": "^3.4.3"
   },
   "devDependencies": {
     "supervisor": "^0.6.0"

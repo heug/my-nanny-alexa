@@ -8,11 +8,11 @@ var AlexaAppServer = require('alexa-app-server');
 // var PORT = process.env.port || 8123;
 
 AlexaAppServer.start({
-    server_root:__dirname,     // Path to root
-    public_html:"public_html",
-    app_dir:"apps",            // Where alexa-app modules are stored
-    app_root:"/alexa/",        // Service root
-    port:8080,
+    server_root: __dirname,     // Path to root
+    public_html: "public_html",
+    app_dir: "apps",            // Where alexa-app modules are stored
+    app_root: "/alexa/",        // Service root
+    port: 8080,
     preRequest: function(json,req,res) {
       console.log("preRequest fired");
       json.userDetails = { "name":"Bob Smith" };
