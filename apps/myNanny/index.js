@@ -8,9 +8,9 @@ module.change_code = 1;
 var app = new alexa.app('myNanny');
 
 // Things to do on launch ==============================================================
-app.launch(function(req,res) {
-  console.log("myNanny onLaunch requestId: " + launchRequest.requestId + ", sessionId: " 
-    + session.sessionId);
+app.launch(function(req, res) {
+  // console.log("myNanny onLaunch requestId: " + launchRequest.requestId + ", sessionId: " 
+  //   + session.sessionId);
   
   var speechOutput = "Nanny operational. What can I do for you?";
   var repromptText = "For instructions on what you can say, please say help me.";
@@ -108,6 +108,12 @@ app.intent("AMAZON.CancelIntent", {},
   function(req, res) {
     var speechOutput = "Goodbye";
     res.say(speechOutput);
-})
+}),
+
+app.sessionEnded(function(req, res) {
+    // Clean up the user's server-side stuff, if necessary
+    logout(req.userId);
+    // No response necessary
+});
 
 module.exports = app;
