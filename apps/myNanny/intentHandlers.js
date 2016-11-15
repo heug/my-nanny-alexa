@@ -24,17 +24,17 @@ var registerIntentHandlers = function(app) {
 
   app.intent("CheckInIntent", {
     "slots": {
-      "NAME": "LITERAL"
+      "FIRSTNAME": "LITERAL"
     },
     "utterances": [
-      "{NAME} {check|is checking} in",
-      "{NAME} is {home|back}",
-      "{NAME} has {arrived|returned}"
+      Stubs.names + " {check|is checking} in",
+      Stubs.names + " is {home|back}",
+      Stubs.names + " has {arrived|returned}"
     ]
   }, function(req, res) {
     // TODO: API call to retrieve account information
     var user = ACCOUNT_INFO;
-    var childName = req.slot('NAME'); 
+    var childName = req.slot('FIRSTNAME'); 
     var alreadyCheckedIn = helpers.alreadyCheckedIn(user, childName);
     var choreList = helpers.getChores(user, childName);
 
@@ -64,18 +64,18 @@ var registerIntentHandlers = function(app) {
 
   app.intent("ChoreListIntent", {
     "slots": {
-      "NAME": "LITERAL"
+      "FIRSTNAME": "LITERAL"
     },
     "utterances": [
-      "{What are|What're|What|} {NAME}'s chores {are|} {today|} {again|}",
-      "What does {NAME} have to do today {again|}",
-      "{NAME}{'s|} {chores|chore|to do} {list|}",
-      "What is {NAME} doing {today|}",
-      "{Find|Get|Give} {me|} {NAME}{'s|} chores."
+      "{What are|What're|What|} " + Stubs.names + " chores {are|} {today|} {again|}",
+      "What does " + Stubs.names + " have to do today {again|}",
+      Stubs.names + " {chores|chore|to do} {list|}",
+      "What is " + Stubs.names + " doing {today|}",
+      "{Find|Get|Give} {me|} " + Stubs.names + " chores."
     ]
   }, function(req, res) {
     var user = ACCOUNT_INFO;
-    var childName = req.slot('NAME');
+    var childName = req.slot('FIRSTNAME');
     var speechOutput = childName + ", ";
 
     var choreList = helpers.getChores(user, childName);
@@ -95,16 +95,16 @@ var registerIntentHandlers = function(app) {
 
   app.intent("FinishChoreIntent", {
     "slots": {
-      "NAME": "LITERAL",
+      "FIRSTNAME": "LITERAL",
       "CHORE":"LITERAL"
     },
     "utterances": [
-      "{NAME} {is|} {finally|} {done|completed|finished} {with|} {CHORE}",
-      "{CHORE} complete {by|} {NAME}"
+      Stubs.names + " {is|} {finally|} {done|completed|finished} {with|} " + Stubs.chores,
+      Stubs.chores + " {done|complete} {by|} " + Stubs.names
     ]
   }, function(req, res) {
     var user = ACCOUNT_INFO;
-    var childName = req.slot('NAME');
+    var childName = req.slot('FIRSTNAME');
     var choreName = req.slot('CHORE');
     var completions = ["You finished ", "You're done "];
     var congratulations = ["Congratulations!", "Good job!", "Great work!", "Way to go!", "Keep it up!"]
@@ -144,7 +144,7 @@ var registerIntentHandlers = function(app) {
 
   app.intent("AMAZON.HelpIntent", {},
   function(req, res) {
-    var speechOutput = "You can say things like, Alex is home, what are Alex's chores, Alex \
+    var speechOutput = "You can say things like, Alex is home, what are Alex chores, Alex \
     finished sweeping, or, you can say exit... Now, what can I help you with?";
     res.say(speechOutput);
   }),  
