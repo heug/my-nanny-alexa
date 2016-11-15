@@ -1,3 +1,5 @@
+'use strict';
+
 module.change_code = 1;
 
 // TODO: Replace ACCOUNT_INFO with data from AJAX call
@@ -9,7 +11,7 @@ var twilioHandler = require('./twilio');
 var rp = require('request-promise');
 
 
-const registerIntentHandlers = (app) => {
+const registerIntentHandlers = function(app) {
 
   app.launch(function(req, res) {
     
