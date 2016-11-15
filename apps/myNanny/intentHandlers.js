@@ -24,7 +24,7 @@ var registerIntentHandlers = function(app) {
 
   app.intent("CheckInIntent", {
     "slots": {
-      "NAME": "AMAZON.US_FIRST_NAME"
+      "NAME": "LITERAL"
     },
     "utterances": [
       "{NAME} {check|is checking} in",
@@ -64,13 +64,13 @@ var registerIntentHandlers = function(app) {
 
   app.intent("ChoreListIntent", {
     "slots": {
-      "NAME": "AMAZON.US_FIRST_NAME"
+      "NAME": "LITERAL"
     },
     "utterances": [
       "{What are|What're|What|} {NAME}'s chores {are|} {today|} {again|}",
       "What does {NAME} have to do today {again|}",
       "{NAME}{'s|} {chores|chore|to do} {list|}",
-      "What is {NAME} doing {today|}?",
+      "What is {NAME} doing {today|}",
       "{Find|Get|Give} {me|} {NAME}{'s|} chores."
     ]
   }, function(req, res) {
@@ -95,7 +95,7 @@ var registerIntentHandlers = function(app) {
 
   app.intent("FinishChoreIntent", {
     "slots": {
-      "NAME": "AMAZON.US_FIRST_NAME",
+      "NAME": "LITERAL",
       "CHORE":"LITERAL"
     },
     "utterances": [
@@ -133,7 +133,7 @@ var registerIntentHandlers = function(app) {
     res.say(speechOutput);
   }),
 
-  app.intent("Hal2000Intent", {
+  app.intent("HALIntent", {
     "utterances": [
       "Open the {pod|bay|pod bay|} doors {hal|}"
     ]
@@ -143,10 +143,20 @@ var registerIntentHandlers = function(app) {
   }),
 
   app.intent("AMAZON.HelpIntent", {},
+  function(req, res) {
+    var speechOutput = "You can say things like, Alex is home, what are Alex's chores, Alex \
+    finished sweeping, or, you can say exit... Now, what can I help you with?";
+    res.say(speechOutput);
+  }),  
+
+  app.intent("AMAZON.PauseIntent", {},
+  function(req, res) {
+    res.say('not set up yet');
+  }),
+
+  app.intent("AMAZON.ResumeIntent", {},
     function(req, res) {
-      var speechOutput = "You can say things like, Alex is home, what are Alex's chores, Alex \
-      finished sweeping, or, you can say exit... Now, what can I help you with?";
-      res.say(speechOutput);
+      res.say('not set up yet');
   }),
 
   app.intent("AMAZON.StopIntent", {},
