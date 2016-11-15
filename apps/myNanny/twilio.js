@@ -1,7 +1,7 @@
 var creds = require('../../cred/twilio.js');
 var twilio = require('twilio')(creds.SID, creds.Token);
 
-const twilioHandler = (name) => {
+const twilioHandler = function(name) {
   twilio.sendMessage({
     to: '+19173925602',
     from: '+14152001765',

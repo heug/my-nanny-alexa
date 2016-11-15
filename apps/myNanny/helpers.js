@@ -1,12 +1,14 @@
+'use strict';
+
 module.change_code = 1;
 
 const helpers = {};
 
-helpers.randomize = (phrases) => {
+helpers.randomize = function(phrases) {
   return phrases[Math.floor(Math.random() * phrases.length)]; 
 };
 
-helpers.alreadyCheckedIn = (user, childName) => {
+helpers.alreadyCheckedIn = function(user, childName) {
   for (var i = 0; i < user.children.length; i++) {
     if (user.children[i].name === childName) {
       if (user.children[i].checkedIn === true) {
@@ -21,7 +23,7 @@ helpers.alreadyCheckedIn = (user, childName) => {
   return undefined;
 };
 
-helpers.getChores = (user, childName) => {
+helpers.getChores = function(user, childName) {
   var speechOutput = '';
 
   for (var i = 0; i < user.children.length; i++) {
