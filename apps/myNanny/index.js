@@ -1,5 +1,3 @@
-'use strict';
-
 var alexa = require('alexa-app');
 var addIntentHandlers = require('./intentHandlers');
 
