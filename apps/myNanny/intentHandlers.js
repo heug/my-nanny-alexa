@@ -1,5 +1,3 @@
-'use strict';
-
 module.change_code = 1;
 
 // TODO: Replace ACCOUNT_INFO with data from AJAX call
