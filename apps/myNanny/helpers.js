@@ -2,7 +2,7 @@
 
 module.change_code = 1;
 
-const helpers = {};
+var helpers = {};
 
 helpers.randomize = function(phrases) {
   return phrases[Math.floor(Math.random() * phrases.length)]; 

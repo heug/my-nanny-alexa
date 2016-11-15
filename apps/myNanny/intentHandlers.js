@@ -11,7 +11,7 @@ var twilioHandler = require('./twilio');
 var rp = require('request-promise');
 
 
-const registerIntentHandlers = function(app) {
+var registerIntentHandlers = function(app) {
 
   app.launch(function(req, res) {
     
