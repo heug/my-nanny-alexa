@@ -2,7 +2,7 @@
 
 // App ID for the skill
 
-var APP_ID = "amzn1.ask.skill.d09cc0c6-064c-4c48-8930-c8cee1d10a78";
+var APP_ID = "amzn1.ask.skill.175fac04-b21e-4168-9ca7-ce3305bca6fd";
 
 // The AlexaSkill prototype and helper functions
 
@@ -93,7 +93,7 @@ MyNanny.prototype.intentHandlers = {
       response.tell(speechOutput);
     },
 
-    "Hal2000Intent": function (intent, session, response) {
+    "HALIntent": function (intent, session, response) {
       var speechOutput = "I'm sorry Dave, I'm afraid I can't do that.";
       response.tell(speechOutput);
     },

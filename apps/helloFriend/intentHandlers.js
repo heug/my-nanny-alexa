@@ -13,7 +13,7 @@ var registerIntentHandlers = function(app) {
   });
 
 
-  app.intent("HelloIntent", {
+  app.intent("HelloFriendIntent", {
     "utterances": [
       "Hello"
     ]
