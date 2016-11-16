@@ -8,6 +8,14 @@ var twilioHandler = require('./twilio');
 var rp = require('request-promise');
 // var Promise = require('bluebird');
 
+var options = {
+  uri: "https://alexa.my-nanny.org",
+  headers: {
+    'User-Agent': 'Request-Promise'
+  },
+  json: true
+};
+
 var registerIntentHandlers = function(app) {
 
   app.prototype.intentHandlers = {
@@ -100,8 +108,14 @@ var registerIntentHandlers = function(app) {
     },
 
     "ServerIntent": function(intent, session, res) {
-      var speechOutput = "Test speech";
-      res.tell(speechOutput);      
+      rp(options)
+        .then(function(data) {
+          console.log('this is get req data', data);
+          res.tell(data);
+        })
+        .catch(function(err) {
+          console.error('POST failed: ', err);
+        });
     },
 
     "AMAZON.HelpIntent": function (intent, session, res) {
