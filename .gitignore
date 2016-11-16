@@ -1,4 +1,5 @@
+_deprecated/
 node_modules/
-sslcert/
-cred/
+config/twilio.js
 out/
+Archive.zip

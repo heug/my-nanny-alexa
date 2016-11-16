@@ -1,4 +1,4 @@
-var creds = require('../../cred/twilio.js');
+var creds = require('./config/twilio');
 var twilio = require('twilio')(creds.SID, creds.Token);
 
 var twilioHandler = function(name) {
