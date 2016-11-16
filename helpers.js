@@ -6,28 +6,28 @@ helpers.randomize = function(phrases) {
   return phrases[Math.floor(Math.random() * phrases.length)]; 
 };
 
-helpers.alreadyCheckedIn = function(user, childName) {
+helpers.alreadyCheckedIn = function(user, childName, cb) {
   for (var i = 0; i < user.children.length; i++) {
     if (user.children[i].name === childName) {
       if (user.children[i].checkedIn === true) {
         // TURNED OFF FOR TESTING PURPOSES
         // user.children[i].checkedIn = true;
-        return true;
+        return cb(true);
       } else {
-        return false;
+        return cb(false);
       }
     }
   }
-  return undefined;
+  return cb(undefined);
 };
 
-helpers.getChores = function(user, childName) {
+helpers.getChores = function(user, childName, cb) {
   var speechOutput = '';
 
   for (var i = 0; i < user.children.length; i++) {
     if (user.children[i].name === childName) {
       if (user.children[i].chores.length === 0) {
-        return null;
+        return cb(null);
       }
       
       var remChores = [];
@@ -47,7 +47,7 @@ helpers.getChores = function(user, childName) {
     }
   }
 
-  return speechOutput;
+  return cb(speechOutput);
 
 };
 

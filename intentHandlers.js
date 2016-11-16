@@ -6,6 +6,7 @@ var helpers = require('./helpers');
 
 var twilioHandler = require('./twilio');
 // var rp = require('request-promise');
+// var Promise = require('bluebird');
 
 var registerIntentHandlers = function(app) {
 
@@ -14,47 +15,53 @@ var registerIntentHandlers = function(app) {
     "CheckInIntent": function (intent, session, res) {
       // TODO: API call to retrieve account information
       var user = ACCOUNT_INFO;
-      var childName = intent.slots.FIRSTNAME;
-      var alreadyCheckedIn = helpers.alreadyCheckedIn(user, childName);
-      var choreList = helpers.getChores(user, childName);
+      var childName = intent.slots.FIRSTNAME.value;
       
+      helpers.alreadyCheckedIn(user, childName, function(alreadyCheckedIn) {
+        console.log('user', user.account);
+        console.log('childName', childName);
+        if (alreadyCheckedIn === undefined) {
+          res.tell("Name not recognized, please try again");
+        } else if (alreadyCheckedIn === true) {
+          res.tell(childName + ", you have already been checked in!");
+        } else {
+          var speechOutput = "Welcome home, " + childName + ". Your parent has been notified \
+            of your safe arrival. ";
+        }
+        
+        helpers.getChores(user, childName, function(choreList) {
+          if (choreList === null) {
+            speechOutput += 'You have no chores today!';
+          } else {
+            speechOutput += "Your chores today are to... " + choreList;
+          }
 
-      if (alreadyCheckedIn === undefined) {
-        res.tell("Name not recognized, please try again");
-      } else if (alreadyCheckedIn === true) {
-        res.tell(childName + ", you have already been checked in!");
-      } else {
-        var speechOutput = "Welcome home, " + childName + ". Your parent has been notified \
-          of your safe arrival. ";
-      }
-      
-      if (choreList === null) {
-        speechOutput += 'You have no chores today!';
-      } else {
-        speechOutput += "Your chores today are to... " + choreList;
-      }
-
-      // Working Text Message to parent
-      // twilioHandler(childName);
-
-      res.tell(speechOutput);
+        // Working Text Message to parent
+        // twilioHandler(childName);
+        
+        res.tell(speechOutput);
+          
+        })  
+      });
     },
     
     "ChoreListIntent": function (intent, session, res) {
       var user = ACCOUNT_INFO;
-      var childName = intent.slots.FIRSTNAME;
+      var childName = intent.slots.FIRSTNAME.value;
       var speechOutput = childName + ", ";
-      var choreList = helpers.getChores(user, childName);
       
-      if (choreList === undefined) {
-        return res.tell("Name not recognized, please try again.");
-      } else if (choreList == 0) {
-        speechOutput += 'You have no chores today!';
-      } else {
-        speechOutput += "Your chores today are to..." + choreList;
-      }
-      
-      res.tell(speechOutput);
+      helpers.getChores(user, childName, function(choreList) {
+        if (choreList === undefined) {
+          return res.tell("Name not recognized, please try again.");
+        } else if (choreList == 0) {
+          speechOutput += 'You have no chores today!';
+        } else {
+          speechOutput += "Your chores today are to..." + choreList;
+        }
+        
+        res.tell(speechOutput);
+        
+      });
     },
 
     "FinishChoreIntent": function (intent, session, res) {
@@ -62,23 +69,20 @@ var registerIntentHandlers = function(app) {
       var congratulations = ["Congratulations!", "Good job!", "Great work!", "Way to go!", "Keep it up!"]
       
       var user = ACCOUNT_INFO;
-      var childName = intent.slots.FIRSTNAME;
-      var choreName = intent.slots.CHORE;
-      var choreSlot = intent.slots.Chore;
+      var childName = intent.slots.FIRSTNAME.value;
+      var choreName = intent.slots.CHORE.value;
 
-      var choreList = helpers.getChores(user, childName);
-      
-      var speechOutput = randomizer(completions);
-
-      if (choreList === undefined) {
-        res.tell("Name not recognized, please try again.");
-      } else if (choreList == 0) {
-        res.tell('You have no chores to complete!');
-      } else if (choreName) {
-        res.tell(helpers.randomize(completions) + choreName + '...' + helpers.randomize(congratulations));
-      } else {
-        res.ask("I'm sorry, I didn't understand that. Could you please repeat that?");
-      }
+      helpers.getChores(user, childName, function(choreList) {
+        if (choreList === undefined) {
+          res.tell("Name not recognized, please try again.");
+        } else if (choreList == 0) {
+          res.tell('You have no chores to complete!');
+        } else if (choreName) {
+          res.tell(helpers.randomize(completions) + choreName + '...' + helpers.randomize(congratulations));
+        } else {
+          res.ask("I'm sorry, I didn't understand that. Could you please repeat that?");
+        }
+      });
     },
 
     "PurposeIntent": function (intent, session, res) {

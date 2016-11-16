@@ -19,7 +19,7 @@ module.exports = {
           "completed": true
         },
         {
-          "title": "Wash the dishes",
+          "title": "Walk the dog",
           "details": "Use the blue sponge under the sink.",
           "date": "2016-12-24",
           "completed": false
