@@ -18,10 +18,8 @@ var registerIntentHandlers = function(app) {
       var childName = intent.slots.FIRSTNAME.value;
       
       helpers.alreadyCheckedIn(user, childName, function(alreadyCheckedIn) {
-        console.log('user', user.account);
-        console.log('childName', childName);
         if (alreadyCheckedIn === undefined) {
-          res.tell("Name not recognized, please try again");
+          res.tell(childName + ", is not a recognized child, please try again");
         } else if (alreadyCheckedIn === true) {
           res.tell(childName + ", you have already been checked in!");
         } else {
@@ -51,9 +49,9 @@ var registerIntentHandlers = function(app) {
       var speechOutput = childName + ", ";
       
       helpers.getChores(user, childName, function(choreList) {
-        if (choreList === undefined) {
-          return res.tell("Name not recognized, please try again.");
-        } else if (choreList == 0) {
+        if (choreList === '') {
+          return res.tell(childName + ", is not a recognized child, please try again.");
+        } else if (choreList === null) {
           speechOutput += 'You have no chores today!';
         } else {
           speechOutput += "Your chores today are to..." + choreList;
@@ -73,9 +71,9 @@ var registerIntentHandlers = function(app) {
       var choreName = intent.slots.CHORE.value;
 
       helpers.getChores(user, childName, function(choreList) {
-        if (choreList === undefined) {
-          res.tell("Name not recognized, please try again.");
-        } else if (choreList == 0) {
+        if (choreList === '') {
+          res.tell(childName + ", is not a recognized child, please try again.");
+        } else if (choreList === null) {
           res.tell('You have no chores to complete!');
         } else if (choreName) {
           res.tell(helpers.randomize(completions) + choreName + '...' + helpers.randomize(congratulations));

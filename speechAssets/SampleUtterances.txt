@@ -1,28 +1,120 @@
-PurposeIntent what is your purpose
-PurposeIntent what is your function
-CheckInIntent {Name} is home
-CheckInIntent i'm home 
-CheckInIntent home
-CheckInIntent i have arrived
-CheckInIntent i've arrived
-CheckInIntent i'm here
-CheckInIntent i'm back
-CheckInIntent check in
-CheckInIntent checking in
-ChoreListIntent what are my chores
-ChoreListIntent what do i have to do today
-ChoreListIntent chores
-ChoreListIntent my chores
-ChoreListIntent what my chores are today
-ChoreListIntent task list
-ChoreListIntent chore list
-ChoreListIntent my list
-ChoreListIntent what things are on my list
-ChoreListIntent what things do i have to do today
-FinishChoreIntent i finished {Chore}
-FinishChoreIntent i'm done {Chore}
-FinishChoreIntent i completed {Chore}
-FinishChoreIntent i'm finally done {Chore}
-FinishChoreIntent i'm done with {Chore}
-Hal2000Intent open the pod bay doors
-Hal2000Intent open the pod bay doors hal
+CheckInIntent	{FIRSTNAME} check in
+CheckInIntent	{FIRSTNAME} is checking in
+CheckInIntent	{FIRSTNAME} is home
+CheckInIntent	{FIRSTNAME} is back
+CheckInIntent	{FIRSTNAME} has arrived
+CheckInIntent	{FIRSTNAME} has returned
+ChoreListIntent	What are {FIRSTNAME} chores are today again
+ChoreListIntent	What're {FIRSTNAME} chores are today again
+ChoreListIntent	What {FIRSTNAME} chores are today again
+ChoreListIntent	{FIRSTNAME} chores are today again
+ChoreListIntent	What are {FIRSTNAME} chores today again
+ChoreListIntent	What're {FIRSTNAME} chores today again
+ChoreListIntent	What {FIRSTNAME} chores today again
+ChoreListIntent	{FIRSTNAME} chores today again
+ChoreListIntent	What are {FIRSTNAME} chores are again
+ChoreListIntent	What're {FIRSTNAME} chores are again
+ChoreListIntent	What {FIRSTNAME} chores are again
+ChoreListIntent	{FIRSTNAME} chores are again
+ChoreListIntent	What are {FIRSTNAME} chores again
+ChoreListIntent	What're {FIRSTNAME} chores again
+ChoreListIntent	What {FIRSTNAME} chores again
+ChoreListIntent	{FIRSTNAME} chores again
+ChoreListIntent	What are {FIRSTNAME} chores are today
+ChoreListIntent	What're {FIRSTNAME} chores are today
+ChoreListIntent	What {FIRSTNAME} chores are today
+ChoreListIntent	{FIRSTNAME} chores are today
+ChoreListIntent	What are {FIRSTNAME} chores today
+ChoreListIntent	What're {FIRSTNAME} chores today
+ChoreListIntent	What {FIRSTNAME} chores today
+ChoreListIntent	{FIRSTNAME} chores today
+ChoreListIntent	What are {FIRSTNAME} chores are
+ChoreListIntent	What're {FIRSTNAME} chores are
+ChoreListIntent	What {FIRSTNAME} chores are
+ChoreListIntent	{FIRSTNAME} chores are
+ChoreListIntent	What are {FIRSTNAME} chores
+ChoreListIntent	What're {FIRSTNAME} chores
+ChoreListIntent	What {FIRSTNAME} chores
+ChoreListIntent	{FIRSTNAME} chores
+ChoreListIntent	What does {FIRSTNAME} have to do today again
+ChoreListIntent	What does {FIRSTNAME} have to do today
+ChoreListIntent	{FIRSTNAME} chores list
+ChoreListIntent	{FIRSTNAME} chore list
+ChoreListIntent	{FIRSTNAME} to do list
+ChoreListIntent	{FIRSTNAME} chores
+ChoreListIntent	{FIRSTNAME} chore
+ChoreListIntent	{FIRSTNAME} to do
+ChoreListIntent	What is {FIRSTNAME} doing today
+ChoreListIntent	What is {FIRSTNAME} doing
+ChoreListIntent	Find me {FIRSTNAME} chores.
+ChoreListIntent	Get me {FIRSTNAME} chores.
+ChoreListIntent	Give me {FIRSTNAME} chores.
+ChoreListIntent	Find {FIRSTNAME} chores.
+ChoreListIntent	Get {FIRSTNAME} chores.
+ChoreListIntent	Give {FIRSTNAME} chores.
+FinishChoreIntent	{FIRSTNAME} is finally done with {CHORE}
+FinishChoreIntent	{FIRSTNAME} finally done with {CHORE}
+FinishChoreIntent	{FIRSTNAME} is done with {CHORE}
+FinishChoreIntent	{FIRSTNAME} done with {CHORE}
+FinishChoreIntent	{FIRSTNAME} is finally completed with {CHORE}
+FinishChoreIntent	{FIRSTNAME} finally completed with {CHORE}
+FinishChoreIntent	{FIRSTNAME} is completed with {CHORE}
+FinishChoreIntent	{FIRSTNAME} completed with {CHORE}
+FinishChoreIntent	{FIRSTNAME} is finally finished with {CHORE}
+FinishChoreIntent	{FIRSTNAME} finally finished with {CHORE}
+FinishChoreIntent	{FIRSTNAME} is finished with {CHORE}
+FinishChoreIntent	{FIRSTNAME} finished with {CHORE}
+FinishChoreIntent	{FIRSTNAME} is finally done {CHORE}
+FinishChoreIntent	{FIRSTNAME} finally done {CHORE}
+FinishChoreIntent	{FIRSTNAME} is done {CHORE}
+FinishChoreIntent	{FIRSTNAME} done {CHORE}
+FinishChoreIntent	{FIRSTNAME} is finally completed {CHORE}
+FinishChoreIntent	{FIRSTNAME} finally completed {CHORE}
+FinishChoreIntent	{FIRSTNAME} is completed {CHORE}
+FinishChoreIntent	{FIRSTNAME} completed {CHORE}
+FinishChoreIntent	{FIRSTNAME} is finally finished {CHORE}
+FinishChoreIntent	{FIRSTNAME} finally finished {CHORE}
+FinishChoreIntent	{FIRSTNAME} is finished {CHORE}
+FinishChoreIntent	{FIRSTNAME} finished {CHORE}
+FinishChoreIntent	{FIRSTNAME} is finally done with {CHORE}
+FinishChoreIntent	{FIRSTNAME} finally done with {CHORE}
+FinishChoreIntent	{FIRSTNAME} is {CHORE}
+FinishChoreIntent	{FIRSTNAME} {CHORE}
+FinishChoreIntent {CHORE} done by {FIRSTNAME}
+FinishChoreIntent	{CHORE} complete by {FIRSTNAME}
+FinishChoreIntent	{CHORE} done {FIRSTNAME}
+FinishChoreIntent	{CHORE} complete {FIRSTNAME}
+FinishChoreIntent	{CHORE} done by {FIRSTNAME}
+FinishChoreIntent	{CHORE} complete by {FIRSTNAME}
+FinishChoreIntent	{CHORE} done {FIRSTNAME}
+FinishChoreIntent	{CHORE} complete {FIRSTNAME}
+FinishChoreIntent	{CHORE} done by {FIRSTNAME}
+FinishChoreIntent	{CHORE} complete by {FIRSTNAME}
+FinishChoreIntent	{CHORE} done {FIRSTNAME}
+FinishChoreIntent	{CHORE} complete {FIRSTNAME}
+FinishChoreIntent	{CHORE} done by {FIRSTNAME}
+FinishChoreIntent	{CHORE} complete by {FIRSTNAME}
+FinishChoreIntent	{CHORE} done {FIRSTNAME}
+FinishChoreIntent	{CHORE} complete {FIRSTNAME}
+FinishChoreIntent	{CHORE} done by {FIRSTNAME}
+FinishChoreIntent	{CHORE} complete by {FIRSTNAME}
+FinishChoreIntent	{CHORE} done {FIRSTNAME}
+FinishChoreIntent	{CHORE} complete {FIRSTNAME}
+FinishChoreIntent	{CHORE} done by {FIRSTNAME}
+FinishChoreIntent	{CHORE} complete by {FIRSTNAME}
+FinishChoreIntent	{CHORE} done {FIRSTNAME}
+FinishChoreIntent	{CHORE} complete {FIRSTNAME}
+FinishChoreIntent	{CHORE} done by {FIRSTNAME}
+FinishChoreIntent	{CHORE} complete by {FIRSTNAME}
+FinishChoreIntent	 {CHORE} done {FIRSTNAME}
+FinishChoreIntent	 {CHORE} complete {FIRSTNAME}
+PurposeIntent	What is your purpose
+PurposeIntent	What is your function
+HALIntent	Open the pod doors hal
+HALIntent	Open the bay doors hal
+HALIntent	Open the pod bay doors hal
+HALIntent	Open the doors hal
+HALIntent	Open the pod doors
+HALIntent	Open the bay doors
+HALIntent	Open the pod bay doors
+HALIntent	Open the doors
