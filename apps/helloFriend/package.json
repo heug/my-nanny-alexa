@@ -1,0 +1,13 @@
+{
+  "name": "helloFriend",
+  "version": "0.0.1",
+  "description": "Hello hello",
+  "main": "index.js",
+  "author": "Dystopian Smurfs",
+  "alexa": {
+    "applicationId":"amzn1.ask.skill.9b33db36-7c39-4a30-b6a5-c9708c9f14bd"
+  },
+  "dependencies": {
+    "alexa-app": "^2.1.0"
+  }
+}
