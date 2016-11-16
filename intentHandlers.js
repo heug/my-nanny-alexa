@@ -5,7 +5,7 @@ var ACCOUNT_INFO = require('./stubs/fullAccount.js');
 var helpers = require('./helpers');
 
 var twilioHandler = require('./twilio');
-// var rp = require('request-promise');
+var rp = require('request-promise');
 // var Promise = require('bluebird');
 
 var registerIntentHandlers = function(app) {
@@ -92,6 +92,16 @@ var registerIntentHandlers = function(app) {
     "HALIntent": function (intent, session, res) {
       var speechOutput = "I'm sorry Dave, I'm afraid I can't do that.";
       res.tell(speechOutput);
+    },
+
+    "CPUIntent": function (intent, session, res) {
+      var speechOutput = "My CPU is a neural net processor, a learning computer.";
+      res.tell(speechOutput);
+    },
+
+    "ServerIntent": function(intent, session, res) {
+      var speechOutput = "Test speech";
+      res.tell(speechOutput);      
     },
 
     "AMAZON.HelpIntent": function (intent, session, res) {

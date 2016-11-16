@@ -40,6 +40,14 @@
       "slots": []
     },
     {
+      "intent": "CPUIntent",
+      "slots": []
+    },
+    {
+      "intent": "ServerIntent",
+      "slots": []
+    },
+    {
       "intent": "AMAZON.HelpIntent",
       "slots": []
     },

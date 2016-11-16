@@ -118,3 +118,5 @@ HALIntent	Open the pod doors
 HALIntent	Open the bay doors
 HALIntent	Open the pod bay doors
 HALIntent	Open the doors
+CPUIntent	What is your CPU
+ServerIntent	Server test
