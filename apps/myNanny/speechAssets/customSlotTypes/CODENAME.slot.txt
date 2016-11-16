@@ -1,9 +1,0 @@
-alpha
-beta
-gamma
-delta
-epsilon
-eugene
-meredith
-luis
-robin

@@ -4,8 +4,6 @@ var APP_ID = require('./config/appId');
 var addEventHandlers = require('./eventHandlers');
 var addIntentHandlers = require('./intentHandlers');
 
-var STUB_DATA = require('./stubs/');
-
 var MyNanny = function () {
     AlexaSkill.call(this, APP_ID.value);
 };

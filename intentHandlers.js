@@ -4,7 +4,7 @@
 var ACCOUNT_INFO = require('./stubs/fullAccount.js');
 var helpers = require('./helpers');
 
-// var twilioHandler = require('./twilio');
+var twilioHandler = require('./twilio');
 // var rp = require('request-promise');
 
 var registerIntentHandlers = function(app) {
