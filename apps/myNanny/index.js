@@ -1,13 +1,25 @@
-var alexa = require('alexa-app');
+var AlexaSkill = require('./AlexaSkill');
+var APP_ID = require('./config/appId');
+
+var addEventHandlers = require('./eventHandlers');
 var addIntentHandlers = require('./intentHandlers');
 
-// Allow this module to be reloaded by hotswap when changed
-module.change_code = 1;
+var STUB_DATA = require('./stubs/');
 
-// Define app name
-var app = new alexa.app('myNanny');
+var MyNanny = function () {
+    AlexaSkill.call(this, APP_ID.value);
+};
 
-// Load Intents (speech-to-action)
-addIntentHandlers(app);
+// Extend AlexaSkill
+MyNanny.prototype = Object.create(AlexaSkill.prototype);
+MyNanny.prototype.constructor = MyNanny;
 
-module.exports = app;
+addEventHandlers(MyNanny);
+addIntentHandlers(MyNanny);
+
+// Create the handler that responds to the Alexa Request.
+exports.handler = function (event, context) {
+    // Create an instance of the MyNanny skill.
+    var myNanny = new MyNanny();
+    myNanny.execute(event, context);
+};

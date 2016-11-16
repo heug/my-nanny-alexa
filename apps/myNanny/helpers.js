@@ -1,7 +1,5 @@
 'use strict';
 
-module.change_code = 1;
-
 var helpers = {};
 
 helpers.randomize = function(phrases) {
