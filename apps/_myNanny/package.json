@@ -1,0 +1,13 @@
+{
+  "name": "testNanny",
+  "version": "0.0.1",
+  "description": "test the nanny",
+  "main": "index.js",
+  "author": "Dystopian Smurfs",
+  "alexa": {
+    "applicationId":"amzn1.ask.skill.175fac04-b21e-4168-9ca7-ce3305bca6fd"
+  },
+  "dependencies": {
+    "alexa-app": "^2.1.0"
+  }
+}
