@@ -3,6 +3,7 @@
 // TODO: Replace ACCOUNT_INFO with data from AJAX call
 var ACCOUNT_INFO = require('./stubs/fullAccount.js');
 var helpers = require('./helpers');
+// var textHelpers = require('./textHelpers');
 
 var twilioHandler = require('./twilio');
 var rp = require('request-promise');
@@ -125,22 +126,41 @@ var registerIntentHandlers = function(app) {
     },
 
     "ServerIntent": function(intent, session, res) {      
-      var options = {
-        uri: "https://alexa.my-nanny.org",
-        headers: {
-          'User-Agent': 'Request-Promise',
-          'AlexaId': session.user.userId
-        },
-        json: true
-      };
+      // var options = {
+      //   uri: "https://alexa.my-nanny.org",
+      //   headers: {
+      //     'User-Agent': 'Request-Promise',
+      //     'AlexaId': session.user.userId
+      //   },
+      //   json: true
+      // };
 
-      rp(options)
+      // rp(options)
+      //   .then(function(data) {
+      //     res.tell(data);
+      //   })
+      //   .catch(function(err) {
+      //     console.error('POST failed: ', err);
+      //   });
+
+      if (!session.user.accessToken) {
+        var speechOutput = "To start using this skill, please use the \
+          companion app to authenticate with Amazon."
+        return res.tellWithCard(speechOutput, 'LinkAccount');
+      }
+
+      var amznProfileUrl = 'https://api.amazon.com/user/profile?access_token=' 
+        + session.user.accessToken;
+      
+      rp(amznProfileUrl)
         .then(function(data) {
           res.tell(data);
         })
         .catch(function(err) {
-          console.error('POST failed: ', err);
+          res.tell(err);
         });
+
+      console.log('here is token!', session.user.accessToken);
     },
 
     "AMAZON.HelpIntent": function (intent, session, res) {

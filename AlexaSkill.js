@@ -139,6 +139,11 @@ Response.prototype = (function () {
                 outputSpeech: createSpeechObject(options.reprompt)
             };
         }
+        if (options.cardTitle === 'LinkAccount') {
+            alexaResponse.card = {
+                type: "LinkAccount"
+            };
+        }
         if (options.cardTitle && options.cardContent) {
             alexaResponse.card = {
                 type: "Simple",
