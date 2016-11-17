@@ -30,34 +30,33 @@ helpers.getChores = function(user, childName, cb) {
         return cb(null);
       }
       
-      var remChores = [];
-      
       for (var j = 0; j < user.children[i].chores.length; j++) {
-        if (user.children[i].chores[j].completed === false) {
-          remChores.push(user.children[i].chores[j]);
-        }
-      }
-      for (var k = 0; k < remChores.length; k++) {
+        var taskNum = j + 1;
         var and = '';
-        if (remChores.length > 1 && k === remChores.length - 1) {
+        if (user.children[i].chores.length > 1 && j === user.children[i].chores.length - 1) {
           and = 'and ';
         }
-        speechOutput += and + remChores[k].title + ', ';
+        speechOutput += and + taskNum + ',' + user.children[i].chores[j].title + '...';
       }
+
+      // for (var j = 0; j < user.children[i].chores.length; j++) {
+      //   if (user.children[i].chores[j].completed === false) {
+      //     var taskNum = j + 1;
+      //     remChores.push(user.children[i].chores[j]);
+      //   }
+      // }
+      // for (var k = 0; k < remChores.length; k++) {
+      //   var and = '';
+      //   if (remChores.length > 1 && k === remChores.length - 1) {
+      //     and = 'and ';
+      //   }
+      //   speechOutput += and + remChores[k].title + ', ';      
+      // }
     }
   }
 
   return cb(speechOutput);
 
-};
-
-helpers.options = {
-  method: 'POST',
-  uri: 'http://localhost:1337/api/',
-  body: {
-
-  },
-  json: true // Automatically stringifies the body to JSON
 };
 
 module.exports = helpers;

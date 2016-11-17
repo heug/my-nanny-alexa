@@ -6,7 +6,6 @@ var helpers = require('./helpers');
 
 var twilioHandler = require('./twilio');
 var rp = require('request-promise');
-// var Promise = require('bluebird');
 
 var options = {
   uri: "https://alexa.my-nanny.org",
@@ -24,6 +23,8 @@ var registerIntentHandlers = function(app) {
       // TODO: API call to retrieve account information
       var user = ACCOUNT_INFO;
       var childName = intent.slots.FIRSTNAME.value;
+      var repromptOutput = "If you'd like to receive a list of chores on your phone, please say, \
+        send chores.";
       
       helpers.alreadyCheckedIn(user, childName, function(alreadyCheckedIn) {
         if (alreadyCheckedIn === undefined) {
@@ -37,9 +38,11 @@ var registerIntentHandlers = function(app) {
         
         helpers.getChores(user, childName, function(choreList) {
           if (choreList === null) {
-            speechOutput += 'You have no chores today!';
-          } else {
-            speechOutput += "Your chores today are to... " + choreList;
+            speechOutput += "You have no chores today!";
+            res.tell(speechOutput);
+          } else {      
+            speechOutput += "Your chores today are to... " + choreList + repromptOutput;
+            res.ask(speechOutput, repromptOutput);
           }
 
         // Working Text Message to parent
@@ -110,7 +113,6 @@ var registerIntentHandlers = function(app) {
     "ServerIntent": function(intent, session, res) {
       rp(options)
         .then(function(data) {
-          console.log('this is get req data', data);
           res.tell(data);
         })
         .catch(function(err) {
