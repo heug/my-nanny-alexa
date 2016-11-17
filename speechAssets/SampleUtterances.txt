@@ -52,6 +52,166 @@ ChoreListIntent	Give me {FIRSTNAME} chores.
 ChoreListIntent	Find {FIRSTNAME} chores.
 ChoreListIntent	Get {FIRSTNAME} chores.
 ChoreListIntent	Give {FIRSTNAME} chores.
+ChoreDetailsIntent	Could I get more details on chore {CHORE} for {FIRSTNAME} please
+ChoreDetailsIntent	get more details on chore {CHORE} for {FIRSTNAME} please
+ChoreDetailsIntent	Could I more details on chore {CHORE} for {FIRSTNAME} please
+ChoreDetailsIntent	more details on chore {CHORE} for {FIRSTNAME} please
+ChoreDetailsIntent	Could I get details on chore {CHORE} for {FIRSTNAME} please
+ChoreDetailsIntent	get details on chore {CHORE} for {FIRSTNAME} please
+ChoreDetailsIntent	Could I details on chore {CHORE} for {FIRSTNAME} please
+ChoreDetailsIntent	details on chore {CHORE} for {FIRSTNAME} please
+ChoreDetailsIntent	Could I get more details for chore {CHORE} for {FIRSTNAME} please
+ChoreDetailsIntent	get more details for chore {CHORE} for {FIRSTNAME} please
+ChoreDetailsIntent	Could I more details for chore {CHORE} for {FIRSTNAME} please
+ChoreDetailsIntent	more details for chore {CHORE} for {FIRSTNAME} please
+ChoreDetailsIntent	Could I get details for chore {CHORE} for {FIRSTNAME} please
+ChoreDetailsIntent	get details for chore {CHORE} for {FIRSTNAME} please
+ChoreDetailsIntent	Could I details for chore {CHORE} for {FIRSTNAME} please
+ChoreDetailsIntent	details for chore {CHORE} for {FIRSTNAME} please
+ChoreDetailsIntent	Could I get more details regarding chore {CHORE} for {FIRSTNAME} please
+ChoreDetailsIntent	get more details regarding chore {CHORE} for {FIRSTNAME} please
+ChoreDetailsIntent	Could I more details regarding chore {CHORE} for {FIRSTNAME} please
+ChoreDetailsIntent	more details regarding chore {CHORE} for {FIRSTNAME} please
+ChoreDetailsIntent	Could I get details regarding chore {CHORE} for {FIRSTNAME} please
+ChoreDetailsIntent	get details regarding chore {CHORE} for {FIRSTNAME} please
+ChoreDetailsIntent	Could I details regarding chore {CHORE} for {FIRSTNAME} please
+ChoreDetailsIntent	details regarding chore {CHORE} for {FIRSTNAME} please
+ChoreDetailsIntent	Could I get more details chore {CHORE} for {FIRSTNAME} please
+ChoreDetailsIntent	get more details chore {CHORE} for {FIRSTNAME} please
+ChoreDetailsIntent	Could I more details chore {CHORE} for {FIRSTNAME} please
+ChoreDetailsIntent	more details chore {CHORE} for {FIRSTNAME} please
+ChoreDetailsIntent	Could I get details chore {CHORE} for {FIRSTNAME} please
+ChoreDetailsIntent	get details chore {CHORE} for {FIRSTNAME} please
+ChoreDetailsIntent	Could I details chore {CHORE} for {FIRSTNAME} please
+ChoreDetailsIntent	details chore {CHORE} for {FIRSTNAME} please
+ChoreDetailsIntent	Could I get more details on chore {CHORE} {FIRSTNAME} please
+ChoreDetailsIntent	get more details on chore {CHORE} {FIRSTNAME} please
+ChoreDetailsIntent	Could I more details on chore {CHORE} {FIRSTNAME} please
+ChoreDetailsIntent	more details on chore {CHORE} {FIRSTNAME} please
+ChoreDetailsIntent	Could I get details on chore {CHORE} {FIRSTNAME} please
+ChoreDetailsIntent	get details on chore {CHORE} {FIRSTNAME} please
+ChoreDetailsIntent	Could I details on chore {CHORE} {FIRSTNAME} please
+ChoreDetailsIntent	details on chore {CHORE} {FIRSTNAME} please
+ChoreDetailsIntent	Could I get more details for chore {CHORE} {FIRSTNAME} please
+ChoreDetailsIntent	get more details for chore {CHORE} {FIRSTNAME} please
+ChoreDetailsIntent	Could I more details for chore {CHORE} {FIRSTNAME} please
+ChoreDetailsIntent	more details for chore {CHORE} {FIRSTNAME} please
+ChoreDetailsIntent	Could I get details for chore {CHORE} {FIRSTNAME} please
+ChoreDetailsIntent	get details for chore {CHORE} {FIRSTNAME} please
+ChoreDetailsIntent	Could I details for chore {CHORE} {FIRSTNAME} please
+ChoreDetailsIntent	details for chore {CHORE} {FIRSTNAME} please
+ChoreDetailsIntent	Could I get more details regarding chore {CHORE} {FIRSTNAME} please
+ChoreDetailsIntent	get more details regarding chore {CHORE} {FIRSTNAME} please
+ChoreDetailsIntent	Could I more details regarding chore {CHORE} {FIRSTNAME} please
+ChoreDetailsIntent	more details regarding chore {CHORE} {FIRSTNAME} please
+ChoreDetailsIntent	Could I get details regarding chore {CHORE} {FIRSTNAME} please
+ChoreDetailsIntent	get details regarding chore {CHORE} {FIRSTNAME} please
+ChoreDetailsIntent	Could I details regarding chore {CHORE} {FIRSTNAME} please
+ChoreDetailsIntent	details regarding chore {CHORE} {FIRSTNAME} please
+ChoreDetailsIntent	Could I get more details chore {CHORE} {FIRSTNAME} please
+ChoreDetailsIntent	get more details chore {CHORE} {FIRSTNAME} please
+ChoreDetailsIntent	Could I more details chore {CHORE} {FIRSTNAME} please
+ChoreDetailsIntent	more details chore {CHORE} {FIRSTNAME} please
+ChoreDetailsIntent	Could I get details chore {CHORE} {FIRSTNAME} please
+ChoreDetailsIntent	get details chore {CHORE} {FIRSTNAME} please
+ChoreDetailsIntent	Could I details chore {CHORE} {FIRSTNAME} please
+ChoreDetailsIntent	details chore {CHORE} {FIRSTNAME} please
+ChoreDetailsIntent	Could I get more details on chore {CHORE} for {FIRSTNAME}
+ChoreDetailsIntent	get more details on chore {CHORE} for {FIRSTNAME}
+ChoreDetailsIntent	Could I more details on chore {CHORE} for {FIRSTNAME}
+ChoreDetailsIntent	more details on chore {CHORE} for {FIRSTNAME}
+ChoreDetailsIntent	Could I get details on chore {CHORE} for {FIRSTNAME}
+ChoreDetailsIntent	get details on chore {CHORE} for {FIRSTNAME}
+ChoreDetailsIntent	Could I details on chore {CHORE} for {FIRSTNAME}
+ChoreDetailsIntent	details on chore {CHORE} for {FIRSTNAME}
+ChoreDetailsIntent	Could I get more details for chore {CHORE} for {FIRSTNAME}
+ChoreDetailsIntent	get more details for chore {CHORE} for {FIRSTNAME}
+ChoreDetailsIntent	Could I more details for chore {CHORE} for {FIRSTNAME}
+ChoreDetailsIntent	more details for chore {CHORE} for {FIRSTNAME}
+ChoreDetailsIntent	Could I get details for chore {CHORE} for {FIRSTNAME}
+ChoreDetailsIntent	get details for chore {CHORE} for {FIRSTNAME}
+ChoreDetailsIntent	Could I details for chore {CHORE} for {FIRSTNAME}
+ChoreDetailsIntent	details for chore {CHORE} for {FIRSTNAME}
+ChoreDetailsIntent	Could I get more details regarding chore {CHORE} for {FIRSTNAME}
+ChoreDetailsIntent	get more details regarding chore {CHORE} for {FIRSTNAME}
+ChoreDetailsIntent	Could I more details regarding chore {CHORE} for {FIRSTNAME}
+ChoreDetailsIntent	more details regarding chore {CHORE} for {FIRSTNAME}
+ChoreDetailsIntent	Could I get details regarding chore {CHORE} for {FIRSTNAME}
+ChoreDetailsIntent	get details regarding chore {CHORE} for {FIRSTNAME}
+ChoreDetailsIntent	Could I details regarding chore {CHORE} for {FIRSTNAME}
+ChoreDetailsIntent	details regarding chore {CHORE} for {FIRSTNAME}
+ChoreDetailsIntent	Could I get more details chore {CHORE} for {FIRSTNAME}
+ChoreDetailsIntent	get more details chore {CHORE} for {FIRSTNAME}
+ChoreDetailsIntent	Could I more details chore {CHORE} for {FIRSTNAME}
+ChoreDetailsIntent	more details chore {CHORE} for {FIRSTNAME}
+ChoreDetailsIntent	Could I get details chore {CHORE} for {FIRSTNAME}
+ChoreDetailsIntent	get details chore {CHORE} for {FIRSTNAME}
+ChoreDetailsIntent	Could I details chore {CHORE} for {FIRSTNAME}
+ChoreDetailsIntent	details chore {CHORE} for {FIRSTNAME}
+ChoreDetailsIntent	Could I get more details on chore {CHORE} {FIRSTNAME}
+ChoreDetailsIntent	get more details on chore {CHORE} {FIRSTNAME}
+ChoreDetailsIntent	Could I more details on chore {CHORE} {FIRSTNAME}
+ChoreDetailsIntent	more details on chore {CHORE} {FIRSTNAME}
+ChoreDetailsIntent	Could I get details on chore {CHORE} {FIRSTNAME}
+ChoreDetailsIntent	get details on chore {CHORE} {FIRSTNAME}
+ChoreDetailsIntent	Could I details on chore {CHORE} {FIRSTNAME}
+ChoreDetailsIntent	details on chore {CHORE} {FIRSTNAME}
+ChoreDetailsIntent	Could I get more details for chore {CHORE} {FIRSTNAME}
+ChoreDetailsIntent	get more details for chore {CHORE} {FIRSTNAME}
+ChoreDetailsIntent	Could I more details for chore {CHORE} {FIRSTNAME}
+ChoreDetailsIntent	more details for chore {CHORE} {FIRSTNAME}
+ChoreDetailsIntent	Could I get details for chore {CHORE} {FIRSTNAME}
+ChoreDetailsIntent	get details for chore {CHORE} {FIRSTNAME}
+ChoreDetailsIntent	Could I details for chore {CHORE} {FIRSTNAME}
+ChoreDetailsIntent	details for chore {CHORE} {FIRSTNAME}
+ChoreDetailsIntent	Could I get more details regarding chore {CHORE} {FIRSTNAME}
+ChoreDetailsIntent	get more details regarding chore {CHORE} {FIRSTNAME}
+ChoreDetailsIntent	Could I more details regarding chore {CHORE} {FIRSTNAME}
+ChoreDetailsIntent	more details regarding chore {CHORE} {FIRSTNAME}
+ChoreDetailsIntent	Could I get details regarding chore {CHORE} {FIRSTNAME}
+ChoreDetailsIntent	get details regarding chore {CHORE} {FIRSTNAME}
+ChoreDetailsIntent	Could I details regarding chore {CHORE} {FIRSTNAME}
+ChoreDetailsIntent	details regarding chore {CHORE} {FIRSTNAME}
+ChoreDetailsIntent	Could I get more details chore {CHORE} {FIRSTNAME}
+ChoreDetailsIntent	get more details chore {CHORE} {FIRSTNAME}
+ChoreDetailsIntent	Could I more details chore {CHORE} {FIRSTNAME}
+ChoreDetailsIntent	more details chore {CHORE} {FIRSTNAME}
+ChoreDetailsIntent	Could I get details chore {CHORE} {FIRSTNAME}
+ChoreDetailsIntent	get details chore {CHORE} {FIRSTNAME}
+ChoreDetailsIntent	Could I details chore {CHORE} {FIRSTNAME}
+ChoreDetailsIntent	details chore {CHORE} {FIRSTNAME}
+ChoreDetailsIntent	details for chore for {FIRSTNAME} {CHORE} details
+ChoreDetailsIntent	for chore for {FIRSTNAME} {CHORE} details
+ChoreDetailsIntent	details chore for {FIRSTNAME} {CHORE} details
+ChoreDetailsIntent	chore for {FIRSTNAME} {CHORE} details
+ChoreDetailsIntent	details for for {FIRSTNAME} {CHORE} details
+ChoreDetailsIntent	for for {FIRSTNAME} {CHORE} details
+ChoreDetailsIntent	details for {FIRSTNAME} {CHORE} details
+ChoreDetailsIntent	for {FIRSTNAME} {CHORE} details
+ChoreDetailsIntent	details for chore {FIRSTNAME} {CHORE} details
+ChoreDetailsIntent	for chore {FIRSTNAME} {CHORE} details
+ChoreDetailsIntent	details chore {FIRSTNAME} {CHORE} details
+ChoreDetailsIntent	chore {FIRSTNAME} {CHORE} details
+ChoreDetailsIntent	details for {FIRSTNAME} {CHORE} details
+ChoreDetailsIntent	for {FIRSTNAME} {CHORE} details
+ChoreDetailsIntent	details {FIRSTNAME} {CHORE} details
+ChoreDetailsIntent	{FIRSTNAME} {CHORE} details
+ChoreDetailsIntent	details for chore for {FIRSTNAME} {CHORE}
+ChoreDetailsIntent	for chore for {FIRSTNAME} {CHORE}
+ChoreDetailsIntent	details chore for {FIRSTNAME} {CHORE}
+ChoreDetailsIntent	chore for {FIRSTNAME} {CHORE}
+ChoreDetailsIntent	details for for {FIRSTNAME} {CHORE}
+ChoreDetailsIntent	for for {FIRSTNAME} {CHORE}
+ChoreDetailsIntent	details for {FIRSTNAME} {CHORE}
+ChoreDetailsIntent	for {FIRSTNAME} {CHORE}
+ChoreDetailsIntent	details for chore {FIRSTNAME} {CHORE}
+ChoreDetailsIntent	for chore {FIRSTNAME} {CHORE}
+ChoreDetailsIntent	details chore {FIRSTNAME} {CHORE}
+ChoreDetailsIntent	chore {FIRSTNAME} {CHORE}
+ChoreDetailsIntent	details for {FIRSTNAME} {CHORE}
+ChoreDetailsIntent	for {FIRSTNAME} {CHORE}
+ChoreDetailsIntent	details {FIRSTNAME} {CHORE}
+ChoreDetailsIntent	{FIRSTNAME} {CHORE}
 FinishChoreIntent	{FIRSTNAME} is finally done with chore number {CHORE}
 FinishChoreIntent	{FIRSTNAME} finally done with chore number {CHORE}
 FinishChoreIntent	{FIRSTNAME} is done with chore number {CHORE}

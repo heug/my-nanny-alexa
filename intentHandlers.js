@@ -7,13 +7,6 @@ var helpers = require('./helpers');
 var twilioHandler = require('./twilio');
 var rp = require('request-promise');
 
-var options = {
-  uri: "https://alexa.my-nanny.org",
-  headers: {
-    'User-Agent': 'Request-Promise'
-  },
-  json: true
-};
 
 var registerIntentHandlers = function(app) {
 
@@ -73,9 +66,27 @@ var registerIntentHandlers = function(app) {
       });
     },
 
+    "ChoreDetailsIntent": function (intent, session, res) {
+      
+      var user = ACCOUNT_INFO;
+      var childName = intent.slots.FIRSTNAME.value;
+      var choreNum = intent.slots.CHORE.value;
+
+      helpers.choreDetails(user, childName, choreNum, function(title, details) {
+        if (title === undefined) {
+          res.tell(childName + ", is not a recognized child, please try again.");
+        } else if (title === null || details === '') {
+          res.tell('I do not have any details on that chore');
+        } else {
+          res.tell('chore number ' + choreNum + ',' + title + '...' + details);
+        }
+      });
+    },
+
     "FinishChoreIntent": function (intent, session, res) {
       var completions = ["You finished ", "You're done "];
-      var congratulations = ["Congratulations!", "Good job!", "Great work!", "Way to go!", "Keep it up!"]
+      var congratulations = ["Congratulations!", "Good job!", 
+        "Great work!", "Way to go!", "Keep it up!"];
       
       var user = ACCOUNT_INFO;
       var childName = intent.slots.FIRSTNAME.value;
@@ -113,7 +124,16 @@ var registerIntentHandlers = function(app) {
       res.tell(speechOutput);
     },
 
-    "ServerIntent": function(intent, session, res) {
+    "ServerIntent": function(intent, session, res) {      
+      var options = {
+        uri: "https://alexa.my-nanny.org",
+        headers: {
+          'User-Agent': 'Request-Promise',
+          'AlexaId': session.user.userId
+        },
+        json: true
+      };
+
       rp(options)
         .then(function(data) {
           res.tell(data);

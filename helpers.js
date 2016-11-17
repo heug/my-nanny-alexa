@@ -93,4 +93,21 @@ helpers.finishChore = function(user, childName, choreNum, cb) {
   return cb('');
 };
 
+helpers.choreDetails = function(user, childName, choreNum, cb) {
+
+  for (var i = 0; i < user.children.length; i++) {
+    if (user.children[i].name === childName) {
+      if (user.children[i].chores[choreNum - 1]) {
+        return cb(
+          user.children[i].chores[choreNum - 1].title, 
+          user.children[i].chores[choreNum - 1].details
+        );
+      } else {
+        return cb(null);
+      }
+    }
+  }
+  return cb(undefined);
+};
+
 module.exports = helpers;
