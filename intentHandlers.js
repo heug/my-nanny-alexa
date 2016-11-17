@@ -59,13 +59,13 @@ var registerIntentHandlers = function(app) {
       var childName = intent.slots.FIRSTNAME.value;
       var speechOutput = childName + ", ";
       
-      helpers.getChores(user, childName, function(choreList) {
+      helpers.remainingChores(user, childName, function(choreList) {
         if (choreList === '') {
           return res.tell(childName + ", is not a recognized child, please try again.");
         } else if (choreList === null) {
-          speechOutput += 'You have no chores today!';
+          speechOutput += 'You have no more chores today!';
         } else {
-          speechOutput += "Your chores today are to..." + choreList;
+          speechOutput += "Your remaining chores today, by chore ID, are to..." + choreList;
         }
         
         res.tell(speechOutput);
@@ -79,17 +79,20 @@ var registerIntentHandlers = function(app) {
       
       var user = ACCOUNT_INFO;
       var childName = intent.slots.FIRSTNAME.value;
-      var choreName = intent.slots.CHORE.value;
+      var choreNum = intent.slots.CHORE.value;
 
-      helpers.getChores(user, childName, function(choreList) {
-        if (choreList === '') {
+      helpers.finishChore(user, childName, choreNum, function(status) {
+        if (status === '') {
           res.tell(childName + ", is not a recognized child, please try again.");
-        } else if (choreList === null) {
+        } else if (status === null) {
           res.tell('You have no chores to complete!');
-        } else if (choreName) {
-          res.tell(helpers.randomize(completions) + choreName + '...' + helpers.randomize(congratulations));
+        } else if (status === undefined) {
+          res.tell('Chore ' + choreNum + ' does not exist!');
+        } else if (status === false) {
+          res.tell('Chore ' + choreNum + ' has already been completed!');
         } else {
-          res.ask("I'm sorry, I didn't understand that. Could you please repeat that?");
+          res.tell(helpers.randomize(completions) + 'chore number ' + choreNum + ', ' + status 
+            + '...' + helpers.randomize(congratulations));
         }
       });
     },
@@ -127,12 +130,12 @@ var registerIntentHandlers = function(app) {
     },
 
     "AMAZON.StopIntent": function (intent, session, res) {
-      var speechOutput = "Goodbye";
+      var speechOutput = "Okay.";
       res.tell(speechOutput);
     },
 
     "AMAZON.CancelIntent": function (intent, session, res) {
-      var speechOutput = "Goodbye";
+      var speechOutput = "Okay.";
       res.tell(speechOutput);
     }
   }
