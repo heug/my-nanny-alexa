@@ -154,6 +154,7 @@ var registerIntentHandlers = function(app) {
       
       rp(amznProfileUrl)
         .then(function(data) {
+          console.log('amazon data:', data);
           res.tell(data);
         })
         .catch(function(err) {
