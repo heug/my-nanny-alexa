@@ -1,46 +1,84 @@
 {
-	"intents": [
-		{
-			"intent": "CheckInIntent",
-			"slots": [
+  "intents": [
+    {
+      "intent": "CheckInIntent",
+      "slots": [
         {
-          "name": "Name",
-          "type": "CODENAME"
+          "name": "FIRSTNAME",
+          "type": "LIST_OF_NAMES"
         }
       ]
-		},
+    },
+    {
+      "intent": "ChoreListIntent",
+      "slots": [
+        {
+          "name": "FIRSTNAME",
+          "type": "LIST_OF_NAMES"
+        }
+      ]
+    },
+    {
+      "intent": "ChoreDetailsIntent",
+      "slots": [
+        {
+          "name": "FIRSTNAME",
+          "type": "LIST_OF_NAMES"
+        },
+        {
+          "name": "CHORE",
+          "type": "AMAZON.NUMBER"
+        }
+      ]
+    },
     {
       "intent": "FinishChoreIntent",
       "slots": [
         {
-          "name": "Chore",
-          "type": "CHORE"
+          "name": "FIRSTNAME",
+          "type": "LIST_OF_NAMES"
+        },
+        {
+          "name": "CHORE",
+          "type": "AMAZON.NUMBER"
         }
       ]
     },
     {
-      "intent": "ChoreListIntent"
+      "intent": "PurposeIntent",
+      "slots": []
     },
     {
-      "intent": "PurposeIntent"
+      "intent": "HALIntent",
+      "slots": []
     },
     {
-      "intent": "HALIntent"
-    },
-		{
-			"intent": "AMAZON.HelpIntent"
-		},
-    {
-      "intent": "AMAZON.StopIntent"
+      "intent": "CPUIntent",
+      "slots": []
     },
     {
-      "intent": "AMAZON.CancelIntent"
+      "intent": "ServerIntent",
+      "slots": []
     },
     {
-      "intent": "AMAZON.PauseIntent"
+      "intent": "AMAZON.HelpIntent",
+      "slots": []
     },
     {
-      "intent": "AMAZON.ResumeIntent"
+      "intent": "AMAZON.PauseIntent",
+      "slots": []
+    },
+    {
+      "intent": "AMAZON.ResumeIntent",
+      "slots": []
+    },
+    {
+      "intent": "AMAZON.StopIntent",
+      "slots": []
+    },
+    {
+      "intent": "AMAZON.CancelIntent",
+      "slots": []
     }
-	]
+  ]
 }

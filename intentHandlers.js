@@ -5,8 +5,8 @@ var ACCOUNT_INFO = require('./stubs/fullAccount.js');
 var helpers = require('./helpers');
 
 var twilioHandler = require('./twilio');
-// var rp = require('request-promise');
-// var Promise = require('bluebird');
+var rp = require('request-promise');
+
 
 var registerIntentHandlers = function(app) {
 
@@ -16,12 +16,12 @@ var registerIntentHandlers = function(app) {
       // TODO: API call to retrieve account information
       var user = ACCOUNT_INFO;
       var childName = intent.slots.FIRSTNAME.value;
+      var repromptOutput = "If you'd like to receive a list of chores on your phone, please say, \
+        send chores.";
       
       helpers.alreadyCheckedIn(user, childName, function(alreadyCheckedIn) {
-        console.log('user', user.account);
-        console.log('childName', childName);
         if (alreadyCheckedIn === undefined) {
-          res.tell("Name not recognized, please try again");
+          res.tell(childName + ", is not a recognized child, please try again");
         } else if (alreadyCheckedIn === true) {
           res.tell(childName + ", you have already been checked in!");
         } else {
@@ -31,9 +31,11 @@ var registerIntentHandlers = function(app) {
         
         helpers.getChores(user, childName, function(choreList) {
           if (choreList === null) {
-            speechOutput += 'You have no chores today!';
-          } else {
-            speechOutput += "Your chores today are to... " + choreList;
+            speechOutput += "You have no chores today!";
+            res.tell(speechOutput);
+          } else {      
+            speechOutput += "Your chores today are to... " + choreList + repromptOutput;
+            res.ask(speechOutput, repromptOutput);
           }
 
         // Working Text Message to parent
@@ -50,13 +52,13 @@ var registerIntentHandlers = function(app) {
       var childName = intent.slots.FIRSTNAME.value;
       var speechOutput = childName + ", ";
       
-      helpers.getChores(user, childName, function(choreList) {
-        if (choreList === undefined) {
-          return res.tell("Name not recognized, please try again.");
-        } else if (choreList == 0) {
-          speechOutput += 'You have no chores today!';
+      helpers.remainingChores(user, childName, function(choreList) {
+        if (choreList === '') {
+          return res.tell(childName + ", is not a recognized child, please try again.");
+        } else if (choreList === null) {
+          speechOutput += 'You have no more chores today!';
         } else {
-          speechOutput += "Your chores today are to..." + choreList;
+          speechOutput += "Your remaining chores today, by chore ID, are to..." + choreList;
         }
         
         res.tell(speechOutput);
@@ -64,23 +66,44 @@ var registerIntentHandlers = function(app) {
       });
     },
 
-    "FinishChoreIntent": function (intent, session, res) {
-      var completions = ["You finished ", "You're done "];
-      var congratulations = ["Congratulations!", "Good job!", "Great work!", "Way to go!", "Keep it up!"]
+    "ChoreDetailsIntent": function (intent, session, res) {
       
       var user = ACCOUNT_INFO;
       var childName = intent.slots.FIRSTNAME.value;
-      var choreName = intent.slots.CHORE.value;
+      var choreNum = intent.slots.CHORE.value;
 
-      helpers.getChores(user, childName, function(choreList) {
-        if (choreList === undefined) {
-          res.tell("Name not recognized, please try again.");
-        } else if (choreList == 0) {
-          res.tell('You have no chores to complete!');
-        } else if (choreName) {
-          res.tell(helpers.randomize(completions) + choreName + '...' + helpers.randomize(congratulations));
+      helpers.choreDetails(user, childName, choreNum, function(title, details) {
+        if (title === undefined) {
+          res.tell(childName + ", is not a recognized child, please try again.");
+        } else if (title === null || details === '') {
+          res.tell('I do not have any details on that chore');
         } else {
-          res.ask("I'm sorry, I didn't understand that. Could you please repeat that?");
+          res.tell('chore number ' + choreNum + ',' + title + '...' + details);
+        }
+      });
+    },
+
+    "FinishChoreIntent": function (intent, session, res) {
+      var completions = ["You finished ", "You're done "];
+      var congratulations = ["Congratulations!", "Good job!", 
+        "Great work!", "Way to go!", "Keep it up!"];
+      
+      var user = ACCOUNT_INFO;
+      var childName = intent.slots.FIRSTNAME.value;
+      var choreNum = intent.slots.CHORE.value;
+
+      helpers.finishChore(user, childName, choreNum, function(status) {
+        if (status === '') {
+          res.tell(childName + ", is not a recognized child, please try again.");
+        } else if (status === null) {
+          res.tell('You have no chores to complete!');
+        } else if (status === undefined) {
+          res.tell('Chore ' + choreNum + ' does not exist!');
+        } else if (status === false) {
+          res.tell('Chore ' + choreNum + ' has already been completed!');
+        } else {
+          res.tell(helpers.randomize(completions) + 'chore number ' + choreNum + ', ' + status 
+            + '...' + helpers.randomize(congratulations));
         }
       });
     },
@@ -96,6 +119,30 @@ var registerIntentHandlers = function(app) {
       res.tell(speechOutput);
     },
 
+    "CPUIntent": function (intent, session, res) {
+      var speechOutput = "My CPU is a neural net processor, a learning computer.";
+      res.tell(speechOutput);
+    },
+
+    "ServerIntent": function(intent, session, res) {      
+      var options = {
+        uri: "https://alexa.my-nanny.org",
+        headers: {
+          'User-Agent': 'Request-Promise',
+          'AlexaId': session.user.userId
+        },
+        json: true
+      };
+
+      rp(options)
+        .then(function(data) {
+          res.tell(data);
+        })
+        .catch(function(err) {
+          console.error('POST failed: ', err);
+        });
+    },
+
     "AMAZON.HelpIntent": function (intent, session, res) {
       var speechOutput = "You can say things like, Alex is home, what are Alex chores, Alex \
         finished sweeping, or, you can say exit... Now, what can I help you with?";
@@ -103,12 +150,12 @@ var registerIntentHandlers = function(app) {
     },
 
     "AMAZON.StopIntent": function (intent, session, res) {
-      var speechOutput = "Goodbye";
+      var speechOutput = "Okay.";
       res.tell(speechOutput);
     },
 
     "AMAZON.CancelIntent": function (intent, session, res) {
-      var speechOutput = "Goodbye";
+      var speechOutput = "Okay.";
       res.tell(speechOutput);
     }
   }
