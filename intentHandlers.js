@@ -5,9 +5,10 @@ var ACCOUNT_INFO = require('./stubs/fullAccount.js');
 var helpers = require('./helpers');
 // var textHelpers = require('./textHelpers');
 
-var twilioHandler = require('./twilio');
+var textSMS = require('./twilio');
 var rp = require('request-promise');
 
+var choresForSMS = '';
 
 var registerIntentHandlers = function(app) {
 
@@ -34,17 +35,19 @@ var registerIntentHandlers = function(app) {
           if (choreList === null) {
             speechOutput += "You have no chores today!";
             res.tell(speechOutput);
-          } else {      
-            speechOutput += "Your chores today are to... " + choreList + repromptOutput;
-            res.ask(speechOutput, repromptOutput);
+          } else {
+            choresForSMS = choreList;
+            
+            // Working Text Message to parent
+            // textSMS.checkIn(childName, function(err) {
+            //   if (err) { return res.tell('Error sending text message'); }
+            // });
+            
+              // Move into function block of textSMS.checkIn and uncomment to enable texts
+              speechOutput += "Your chores today are to... " + choreList + repromptOutput;
+              res.ask(speechOutput, repromptOutput);
           }
-
-        // Working Text Message to parent
-        // twilioHandler(childName);
-        
-        res.tell(speechOutput);
-          
-        })  
+        });  
       });
     },
     
@@ -64,6 +67,13 @@ var registerIntentHandlers = function(app) {
         
         res.tell(speechOutput);
         
+      });
+    },
+
+    "ChoreTextIntent": function (intent, session, res) {
+      textSMS.choreList(choresForSMS, function(err) {
+        if (err) { return res.tell('Error sending text message'); }
+        res.tell('List sent');
       });
     },
 
@@ -160,8 +170,6 @@ var registerIntentHandlers = function(app) {
         .catch(function(err) {
           res.tell(err);
         });
-
-      console.log('here is token!', session.user.accessToken);
     },
 
     "AMAZON.HelpIntent": function (intent, session, res) {

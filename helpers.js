@@ -36,7 +36,7 @@ helpers.getChores = function(user, childName, cb) {
         if (user.children[i].chores.length > 1 && j === user.children[i].chores.length - 1) {
           and = 'and ';
         }
-        speechOutput += and + taskNum + ',' + user.children[i].chores[j].title + '...';
+        speechOutput += and + taskNum + ': ' + user.children[i].chores[j].title + '... ';
       }
     }
   }

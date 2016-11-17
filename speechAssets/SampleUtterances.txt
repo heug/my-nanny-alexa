@@ -336,3 +336,5 @@ HALIntent	Open the pod bay doors
 HALIntent	Open the doors
 CPUIntent	What is your CPU
 ServerIntent	initiate server test
+ChoreTextIntent	send chores
+ChoreTextIntent	send chore
