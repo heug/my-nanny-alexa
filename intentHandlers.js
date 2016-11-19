@@ -78,7 +78,7 @@ var registerIntentHandlers = function(app) {
           } else if (choreList === null) {
             speechOutput += 'You have no more chores today!';
           } else {
-            speechOutput += "Your remaining chores today, by chore ID, are to..." + choreList;
+            speechOutput += "Your remaining chores today are to..." + choreList;
           }            
           res.tell(speechOutput);
         });
