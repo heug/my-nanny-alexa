@@ -1,11 +1,9 @@
 {
   "name": "myNanny",
-  "version": "0.0.5",
-  "description": "Modules for myNanny",
-  "author": "Dystopian Smurfs",
+  "version": "0.1.0",
+  "description": "Child Management Application",
+  "author": "Dystopian Smurfs, Hack Reactor, 2016",
   "dependencies": {
-    "alexa-app-server": "^2.2.4",
-    "jsdoc": "^3.4.3",
     "request": "^2.78.0",
     "request-promise": "^4.1.1",
     "twilio": "^2.11.0"
