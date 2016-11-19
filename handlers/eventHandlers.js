@@ -1,5 +1,4 @@
 'use strict';
-
 var registerEventHandlers = function(app) {
   app.prototype.eventHandlers.onSessionStarted = function (sessionStartedRequest, session) {
     console.log("MyNanny onSessionStarted requestId: " + sessionStartedRequest.requestId

@@ -1,5 +1,4 @@
 'use strict';
-
 var helpers = {};
 
 // Return a random phrase from an array of phrases
@@ -8,7 +7,7 @@ helpers.randomize = function(phrases) {
 };
 
 // Check if child already checked in for the day
-helpers.alreadyCheckedIn = function(user, childName, cb) {
+helpers.checkIn = function(user, childName, cb) {
   for (var i = 0; i < user.children.length; i++) {
     if (user.children[i].name === childName) {
       return cb(false);

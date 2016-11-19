@@ -4,7 +4,7 @@ var addEventHandlers = require('./handlers/eventHandlers');
 var addIntentHandlers = require('./handlers/intentHandlers');
 
 var MyNanny = function () {
-    AlexaSkill.call(this, APP_ID.value);
+  AlexaSkill.call(this, APP_ID.value);
 };
 
 // Extend AlexaSkill
@@ -17,7 +17,7 @@ addIntentHandlers(MyNanny);
 
 // Create the handler that responds to the Alexa Request
 exports.handler = function (event, context) {
-    // Create an instance of the MyNanny skill
-    var myNanny = new MyNanny();
-    myNanny.execute(event, context);
+  // Create an instance of the MyNanny skill
+  var myNanny = new MyNanny();
+  myNanny.execute(event, context);
 };

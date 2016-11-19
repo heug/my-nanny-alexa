@@ -1,5 +1,4 @@
-'use strict'
-
+'use strict';
 var api = {};
 
 api.getUser = function(token) {

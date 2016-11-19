@@ -18,7 +18,7 @@ var registerIntentHandlers = function(app) {
         var repromptOutput = "If you'd like to receive a list of chores on your phone, please say, \
           send chores.";
 
-        helpers.alreadyCheckedIn(user, childName, function(alreadyCheckedIn) {
+        helpers.checkIn(user, childName, function(alreadyCheckedIn) {
           if (alreadyCheckedIn === undefined) {
             res.tell(childName + ", is not a recognized child, please try again");
           } else if (alreadyCheckedIn === true) {
@@ -35,12 +35,11 @@ var registerIntentHandlers = function(app) {
             } else {
               choresForSMS = choreList;
               childNumber = childNum;
-              // Working Text Message to parent
+              // Send Text Message to parent
               // textSMS.checkIn(childName, user.phone, function(err) {
               //   if (err) { return res.tell('Error sending text message'); }
               // });
-
-                // Move into function block of textSMS.checkIn and uncomment to enable texts
+                // Move into return block above if enabling textSMS
                 speechOutput += "Your chores today are to... " + choreList + repromptOutput;
                 res.ask(speechOutput, repromptOutput);
             }
@@ -75,6 +74,7 @@ var registerIntentHandlers = function(app) {
     },
 
     "ChoreTextIntent": function (intent, session, res) {
+      // Uncomment to send live textSMS
       // textSMS.choreList(choresForSMS, childNumber, function(err) {
         // if (err) { return res.tell(err); }
         res.tell('List sent');
@@ -144,18 +144,13 @@ var registerIntentHandlers = function(app) {
       res.tell(speechOutput);
     },
 
+    // Test new functionality in here
     "ServerIntent": function(intent, session, res) {      
-
-      if (!session.user.accessToken) {
-        var speechOutput = "To start using this skill, please use the \
-          companion app to authenticate with Amazon."
-        return res.tellWithCard(speechOutput, 'LinkAccount');
-      }
-
+      // Read out a list of children for current user
       rp(api.getUser(session.user.accessToken))
       .then(function(user) {
-        helpers.getChildren(user, function(data) {
-          res.tell(data);
+        helpers.getChildren(user, function(children) {
+          res.tell(children);
         });
       })
       .catch(function(err) {
