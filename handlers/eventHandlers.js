@@ -1,6 +1,4 @@
 'use strict';
-var textHelpers = require('./textHelpers');
-
 var registerEventHandlers = function(app) {
   app.prototype.eventHandlers.onSessionStarted = function (sessionStartedRequest, session) {
     console.log("MyNanny onSessionStarted requestId: " + sessionStartedRequest.requestId
@@ -20,7 +18,6 @@ var registerEventHandlers = function(app) {
     
     var speechOutput = "Nanny operational. What can I do for you?";
     var repromptText = "For instructions on what you can say, please say help me.";
-    
     
     response.ask(speechOutput, repromptText);
   };
