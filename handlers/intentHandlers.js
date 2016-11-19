@@ -1,26 +1,18 @@
 'use strict';
-
-var helpers = require('./helpers');
-var textSMS = require('./twilio');
 var rp = require('request-promise');
+var textSMS = require('../ext/twilio');
+var helpers = require('../modules/helpers');
+var api = require('../modules/api')
 
 var choresForSMS = '';
 var childNumber = '';
-
 
 var registerIntentHandlers = function(app) {
 
   app.prototype.intentHandlers = {
 
-    "CheckInIntent": function (intent, session, res) {      
-      
-      var getUser = {
-        method: 'GET',
-        uri: 'https://api.my-nanny.org/api/account?access_token=' + session.user.accessToken,
-        json: true
-      };
-
-      rp(getUser)
+    "CheckInIntent": function (intent, session, res) {
+      rp(api.getUser(session.user.accessToken))
       .then(function(user) {
         var childName = intent.slots.FIRSTNAME.value;
         var repromptOutput = "If you'd like to receive a list of chores on your phone, please say, \
@@ -61,16 +53,10 @@ var registerIntentHandlers = function(app) {
     },
     
     "ChoreListIntent": function (intent, session, res) {
-      var getUser = {
-        method: 'GET',
-        uri: 'https://api.my-nanny.org/api/account?access_token=' + session.user.accessToken,
-        json: true
-      };
-
       var childName = intent.slots.FIRSTNAME.value;
       var speechOutput = childName + ", ";
       
-      rp(getUser)
+      rp(api.getUser(session.user.accessToken))
       .then(function(user) {
         helpers.remainingChores(user, childName, function(choreList) {
           if (choreList === '') {
@@ -96,16 +82,10 @@ var registerIntentHandlers = function(app) {
     },
 
     "ChoreDetailsIntent": function (intent, session, res) {
-      var getUser = {
-        method: 'GET',
-        uri: 'https://api.my-nanny.org/api/account?access_token=' + session.user.accessToken,
-        json: true
-      };
-
       var childName = intent.slots.FIRSTNAME.value;
       var choreNum = intent.slots.CHORE.value;
 
-      rp(getUser)
+      rp(api.getUser(session.user.accessToken))
       .then(function(user) {
         helpers.choreDetails(user, childName, choreNum, function(title, details) {
           if (title === undefined) {
@@ -123,21 +103,6 @@ var registerIntentHandlers = function(app) {
     },
 
     "FinishChoreIntent": function (intent, session, res) {
-      var getUser = {
-        method: 'GET',
-        uri: 'https://api.my-nanny.org/api/account?access_token=' + session.user.accessToken,
-        json: true
-      };
-
-      var putChore= function(data) {
-        return {
-          method: 'PUT',
-          uri: 'https://api.my-nanny.org/api/chores?access_token=' + session.user.accessToken,
-          body: data,
-          json: true
-        };
-      };
-
       var completions = ["You finished ", "You're done "];
       var congratulations = ["Congratulations!", "Good job!", 
         "Great work!", "Way to go!", "Keep it up!"];
@@ -145,7 +110,7 @@ var registerIntentHandlers = function(app) {
       var childName = intent.slots.FIRSTNAME.value;
       var choreNum = intent.slots.CHORE.value;
 
-      rp(getUser)
+      rp(api.getUser(session.user.accessToken))
       .then(function(user) {
         helpers.finishChore(user, childName, choreNum, function(status, data) {
           if (status === '') {
@@ -157,21 +122,10 @@ var registerIntentHandlers = function(app) {
           } else if (status === false) {
             res.tell('Chore ' + choreNum + ' has already been completed!');
           } else {
-            rp(putChore(
-              {
-                "child": {
-                  "id": data.childId
-                },
-                "chores": [
-                  {
-                    "id": data.choreId,
-                    "completed": true
-                  }
-                ]
-            }))
+            rp(api.putChore(session.user.accessToken, data.childId, data.choreId))
             .then(function() {
-              res.tell(helpers.randomize(completions) + 'chore number ' + choreNum + ', ' + status 
-                + '...' + helpers.randomize(congratulations));
+              res.tell(helpers.randomize(completions) + 'chore number ' + choreNum + ', ' 
+                + status + '...' + helpers.randomize(congratulations));
             })
             .catch(function() {
               res.tell('Error updating chore status');
@@ -190,27 +144,7 @@ var registerIntentHandlers = function(app) {
       res.tell(speechOutput);
     },
 
-    "HALIntent": function (intent, session, res) {
-      var speechOutput = "I'm sorry Dave, I'm afraid I can't do that.";
-      res.tell(speechOutput);
-    },
-
-    "CPUIntent": function (intent, session, res) {
-      var speechOutput = "My CPU is a neural net processor, a learning computer.";
-      res.tell(speechOutput);
-    },
-
     "ServerIntent": function(intent, session, res) {      
-      // var amznProfileUrl = 'https://api.amazon.com/user/profile?access_token=' 
-      //   + session.user.accessToken;
-      // rp(amznProfileUrl)
-      //   .then(function(data) {
-      //     console.log('amazon data:', data);
-      //     res.tell(data);
-      //   })
-      //   .catch(function(err) {
-      //     res.tell(err);
-      //   });
 
       if (!session.user.accessToken) {
         var speechOutput = "To start using this skill, please use the \
@@ -218,26 +152,20 @@ var registerIntentHandlers = function(app) {
         return res.tellWithCard(speechOutput, 'LinkAccount');
       }
 
-      var options = {
-        method: 'GET',
-        uri: 'https://api.my-nanny.org/api/account?access_token=' + session.user.accessToken,
-        json: true 
-      };
-
-      rp(options)
-        .then(function(user) {
-          helpers.getChildren(user, function(data) {
-            res.tell(data);
-          });
-        })
-        .catch(function(err) {
-          res.tell(err);
+      rp(api.getUser(session.user.accessToken))
+      .then(function(user) {
+        helpers.getChildren(user, function(data) {
+          res.tell(data);
         });
+      })
+      .catch(function(err) {
+        res.tell(err);
+      });
     },
 
     "AMAZON.HelpIntent": function (intent, session, res) {
       var speechOutput = "You can say things like, Alex is home, what are Alex chores, Alex \
-        finished sweeping, or, you can say exit... Now, what can I help you with?";
+        finished chore one, or, you can say exit... Now, what can I help you with?";
       res.ask(speechOutput, speechOutput);
     },
 

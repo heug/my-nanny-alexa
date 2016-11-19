@@ -1,5 +1,3 @@
-_deprecated/
 node_modules/
 config/twilio.js
-out/
 Archive.zip

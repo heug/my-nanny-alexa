@@ -1,4 +1,4 @@
-var creds = require('./config/twilio');
+var creds = require('../config/twilio');
 var twilio = require('twilio')(creds.SID, creds.Token);
 
 var textSMS = {};

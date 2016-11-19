@@ -323,15 +323,6 @@ FinishChoreIntent	{CHORE} complete {FIRSTNAME}
 PurposeIntent	What is your purpose
 PurposeIntent	What is your function
 PurposeIntent	What is the reason for your existence
-HALIntent	Open the pod doors hal
-HALIntent	Open the bay doors hal
-HALIntent	Open the pod bay doors hal
-HALIntent	Open the doors hal
-HALIntent	Open the pod doors
-HALIntent	Open the bay doors
-HALIntent	Open the pod bay doors
-HALIntent	Open the doors
-CPUIntent	What is your CPU
 ServerIntent	initiate server test
 ChoreTextIntent	send chores
 ChoreTextIntent	send chore

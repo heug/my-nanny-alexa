@@ -53,14 +53,6 @@
       "slots": []
     },
     {
-      "intent": "HALIntent",
-      "slots": []
-    },
-    {
-      "intent": "CPUIntent",
-      "slots": []
-    },
-    {
       "intent": "ServerIntent",
       "slots": []
     },

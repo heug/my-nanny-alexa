@@ -1,20 +1,19 @@
 'use strict';
 
-var rp = require('request-promise');
-
 var helpers = {};
 
+// Return a random phrase from an array of phrases
 helpers.randomize = function(phrases) {
   return phrases[Math.floor(Math.random() * phrases.length)]; 
 };
 
+// Check if child already checked in for the day
 helpers.alreadyCheckedIn = function(user, childName, cb) {
   for (var i = 0; i < user.children.length; i++) {
     if (user.children[i].name === childName) {
       return cb(false);
       // TODO: uncomment below once checkedIn status implemented
       // if (user.children[i].checkedIn === true) {
-      //   // TURNED OFF FOR TESTING PURPOSES
       //   // user.children[i].checkedIn = true;
       //   return cb(true);
       // } else {
@@ -25,9 +24,11 @@ helpers.alreadyCheckedIn = function(user, childName, cb) {
   return cb(undefined);
 };
 
+// Return a list of chores and child id; null if child is not in account
 helpers.getChores = function(user, childName, cb) {
   var speechOutput = '';
   var childNum = '';
+
   for (var i = 0; i < user.children.length; i++) {
     if (user.children[i].name === childName) {
       if (user.children[i].chores.length === 0) {
@@ -47,6 +48,7 @@ helpers.getChores = function(user, childName, cb) {
   return cb(speechOutput, childNum);
 };
 
+// Get a list of all uncompleted chores for a child
 helpers.remainingChores = function(user, childName, cb) {
   var speechOutput = '';
   var remChores = [];
@@ -77,8 +79,8 @@ helpers.remainingChores = function(user, childName, cb) {
   return cb(speechOutput);
 };
 
+// Get the referenced chore and cb with name and data for chore PUT
 helpers.finishChore = function(user, childName, choreNum, cb) {
-
   for (var i = 0; i < user.children.length; i++) {
     if (user.children[i].name === childName) {
       if (user.children[i].chores.length === 0) {
@@ -100,8 +102,8 @@ helpers.finishChore = function(user, childName, choreNum, cb) {
   return cb('');
 };
 
+// Get details for a single chore
 helpers.choreDetails = function(user, childName, choreNum, cb) {
-
   for (var i = 0; i < user.children.length; i++) {
     if (user.children[i].name === childName) {
       if (user.children[i].chores[choreNum - 1]) {
@@ -117,8 +119,10 @@ helpers.choreDetails = function(user, childName, choreNum, cb) {
   return cb(undefined);
 };
 
+// Return a list of children
 helpers.getChildren = function(user, cb) {
   var speechOutput = '';
+
   for (var i = 0; i < user.children.length; i++) {
     var and = '';
     if (user.children.length > 1 && i === user.children.length - 1) {
