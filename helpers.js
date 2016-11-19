@@ -1,5 +1,7 @@
 'use strict';
 
+var rp = require('request-promise');
+
 var helpers = {};
 
 helpers.randomize = function(phrases) {
@@ -87,8 +89,11 @@ helpers.finishChore = function(user, childName, choreNum, cb) {
       } else if (user.children[i].chores[choreNum - 1].completed) {
         return cb(false);
       } else {
-        // TODO: Mark task as complete on DB
-        return cb(user.children[i].chores[choreNum - 1].title);
+        var data = {
+          childId: user.children[i].id,
+          choreId: user.children[i].chores[choreNum - 1].id
+        }
+        return cb(user.children[i].chores[choreNum - 1].title, data);
       }
     }
   }
