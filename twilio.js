@@ -3,9 +3,9 @@ var twilio = require('twilio')(creds.SID, creds.Token);
 
 var textSMS = {};
 
-textSMS.checkIn = function(name, cb) {
+textSMS.checkIn = function(name, num, cb) {
   twilio.sendMessage({
-    to: '+19173925602',
+    to: '+1' + num,
     from: '+14152001765',
     body: name + ' arrived home safe and sound!'
   }, function(err, resData) {
@@ -17,9 +17,9 @@ textSMS.checkIn = function(name, cb) {
   });
 };
 
-textSMS.choreList = function(chores, cb) {
+textSMS.choreList = function(chores, num, cb) {
   twilio.sendMessage({
-    to: '+19173925602',
+    to: '+1' + num,
     from: '+14152001765',
     body: 'Today\'s chores: ' + chores
   }, function(err, resData) {

@@ -9,13 +9,15 @@ helpers.randomize = function(phrases) {
 helpers.alreadyCheckedIn = function(user, childName, cb) {
   for (var i = 0; i < user.children.length; i++) {
     if (user.children[i].name === childName) {
-      if (user.children[i].checkedIn === true) {
-        // TURNED OFF FOR TESTING PURPOSES
-        // user.children[i].checkedIn = true;
-        return cb(true);
-      } else {
-        return cb(false);
-      }
+      return cb(false);
+      // TODO: uncomment below once checkedIn status implemented
+      // if (user.children[i].checkedIn === true) {
+      //   // TURNED OFF FOR TESTING PURPOSES
+      //   // user.children[i].checkedIn = true;
+      //   return cb(true);
+      // } else {
+      //   return cb(false);
+      // }
     }
   }
   return cb(undefined);
@@ -23,13 +25,13 @@ helpers.alreadyCheckedIn = function(user, childName, cb) {
 
 helpers.getChores = function(user, childName, cb) {
   var speechOutput = '';
-
+  var childNum = '';
   for (var i = 0; i < user.children.length; i++) {
     if (user.children[i].name === childName) {
       if (user.children[i].chores.length === 0) {
         return cb(null);
       }
-      
+      childNum = user.children[i].phone;
       for (var j = 0; j < user.children[i].chores.length; j++) {
         var taskNum = j + 1;
         var and = '';
@@ -40,7 +42,7 @@ helpers.getChores = function(user, childName, cb) {
       }
     }
   }
-  return cb(speechOutput);
+  return cb(speechOutput, childNum);
 };
 
 helpers.remainingChores = function(user, childName, cb) {
@@ -108,6 +110,19 @@ helpers.choreDetails = function(user, childName, choreNum, cb) {
     }
   }
   return cb(undefined);
+};
+
+helpers.getChildren = function(user, cb) {
+  var speechOutput = '';
+  for (var i = 0; i < user.children.length; i++) {
+    var and = '';
+    if (user.children.length > 1 && i === user.children.length - 1) {
+      and = 'and ';
+    }
+    speechOutput += and + user.children[i].name + '... ';
+   
+  }
+  return cb(speechOutput);
 };
 
 module.exports = helpers;

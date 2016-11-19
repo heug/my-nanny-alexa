@@ -204,14 +204,10 @@ ChoreDetailsIntent	details for for {FIRSTNAME} {CHORE}
 ChoreDetailsIntent	for for {FIRSTNAME} {CHORE}
 ChoreDetailsIntent	details for {FIRSTNAME} {CHORE}
 ChoreDetailsIntent	for {FIRSTNAME} {CHORE}
-ChoreDetailsIntent	details for chore {FIRSTNAME} {CHORE}
-ChoreDetailsIntent	for chore {FIRSTNAME} {CHORE}
-ChoreDetailsIntent	details chore {FIRSTNAME} {CHORE}
+ChoreDetailsIntent	details for chore {CHORE} {FIRSTNAME}
 ChoreDetailsIntent	chore {FIRSTNAME} {CHORE}
 ChoreDetailsIntent	details for {FIRSTNAME} {CHORE}
-ChoreDetailsIntent	for {FIRSTNAME} {CHORE}
 ChoreDetailsIntent	details {FIRSTNAME} {CHORE}
-ChoreDetailsIntent	{FIRSTNAME} {CHORE}
 FinishChoreIntent	{FIRSTNAME} is finally done with chore number {CHORE}
 FinishChoreIntent	{FIRSTNAME} finally done with chore number {CHORE}
 FinishChoreIntent	{FIRSTNAME} is done with chore number {CHORE}
@@ -326,6 +322,7 @@ FinishChoreIntent	chore {CHORE} complete {FIRSTNAME}
 FinishChoreIntent	{CHORE} complete {FIRSTNAME}
 PurposeIntent	What is your purpose
 PurposeIntent	What is your function
+PurposeIntent	What is the reason for your existence
 HALIntent	Open the pod doors hal
 HALIntent	Open the bay doors hal
 HALIntent	Open the pod bay doors hal
