@@ -2,7 +2,7 @@
 var rp = require('request-promise');
 var textSMS = require('../ext/twilio');
 var helpers = require('../modules/helpers');
-var api = require('../modules/api')
+var api = require('../modules/api');
 
 var choresForSMS = '';
 var childNumber = '';
@@ -174,6 +174,8 @@ var registerIntentHandlers = function(app) {
       res.tell(speechOutput);
     }
   }
+
+  return app;
 };
 
 module.exports = registerIntentHandlers;
