@@ -4,50 +4,18 @@ var textSMS = require('../ext/twilio');
 var helpers = require('../modules/helpers');
 var api = require('../modules/api');
 
-var choresForSMS = '';
-var childNumber = '';
-
 var registerIntentHandlers = function(app) {
 
   app.prototype.intentHandlers = {
 
-    "CheckInIntent": function (intent, session, res) {
+    CheckInIntent: function (intent, session, res) {
       rp(api.getUser(session.user.accessToken))
       .then(function(user) {
         var childName = intent.slots.FIRSTNAME.value;
-        var repromptOutput = "If you'd like to receive a list of chores on your phone, please say, \
-          send chores.";
-
-        helpers.checkIn(user, childName, function(alreadyCheckedIn) {
-          if (alreadyCheckedIn === undefined) {
-            res.tell(childName + ", is not a recognized child, please try again");
-          } else if (alreadyCheckedIn === true) {
-            res.tell(childName + ", you have already been checked in!");
-          } else {
-            var speechOutput = "Welcome home, " + childName + ". Your parent has been notified \
-              of your safe arrival. ";
-          }
-          
-          helpers.getChores(user, childName, function(choreList, childNum) {
-            if (choreList === null) {
-              speechOutput += "You have no chores today!";
-              res.tell(speechOutput);
-            } else {
-              choresForSMS = choreList;
-              childNumber = childNum;
-              // Send Text Message to parent
-              // textSMS.checkIn(childName, user.phone, function(err) {
-              //   if (err) { return res.tell('Error sending text message'); }
-              // });
-                // Move into return block above if enabling textSMS
-                speechOutput += "Your chores today are to... " + choreList + repromptOutput;
-                res.ask(speechOutput, repromptOutput);
-            }
-          });  
-        });
+        return helpers.checkIn(res, user, childName, helpers.handleChildCheckIn);
       })
       .catch(function(err) {
-        res.tell(err);
+        return res.tell(err);
       });
     },
     

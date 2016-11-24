@@ -7,10 +7,10 @@ helpers.randomize = function(phrases) {
 };
 
 // Check if child already checked in for the day
-helpers.checkIn = function(user, childName, cb) {
+helpers.checkIn = function(res, user, childName, cb) {
   for (var i = 0; i < user.children.length; i++) {
     if (user.children[i].name === childName) {
-      return cb(false);
+      return cb(false, childName);
       // TODO: uncomment below once checkedIn status implemented
       // if (user.children[i].checkedIn === true) {
       //   // user.children[i].checkedIn = true;
@@ -20,18 +20,18 @@ helpers.checkIn = function(user, childName, cb) {
       // }
     }
   }
-  return cb(undefined);
+  return cb(res, undefined, childName);
 };
 
 // Return a list of chores and child id; null if child is not in account
-helpers.getChores = function(user, childName, cb) {
+helpers.getChores = function(res, user, childName, cb) {
   var speechOutput = '';
   var childNum = '';
 
   for (var i = 0; i < user.children.length; i++) {
     if (user.children[i].name === childName) {
       if (user.children[i].chores.length === 0) {
-        return cb(null);
+        return cb(res, null);
       }
       childNum = user.children[i].phone;
       for (var j = 0; j < user.children[i].chores.length; j++) {
@@ -44,7 +44,7 @@ helpers.getChores = function(user, childName, cb) {
       }
     }
   }
-  return cb(speechOutput, childNum);
+  return cb(res, speechOutput, childNum);
 };
 
 // Get a list of all uncompleted chores for a child
@@ -133,4 +133,30 @@ helpers.getChildren = function(user, cb) {
   return cb(speechOutput);
 };
 
+helpers.handleChildChores = function(res, choreList, childNum) {
+  if (choreList === null) {
+    speechOutput += "You have no chores today!";
+    return res.tell(speechOutput);
+  } else {
+    var repromptOutput = "If you'd like to receive a list of chores on your phone, \
+                          please say, send chores.";
+    speechOutput += "Your chores today are... " + choreList + repromptOutput;
+    return res.ask(speechOutput, repromptOutput);
+  }
+};
+
+helpers.handleChildCheckIn = function(res, alreadyCheckedIn, childName) {
+  if (alreadyCheckedIn) {
+    return res.tell(childName + ", you have already been checked in!");
+  }
+  if (alreadyCheckedIn === undefined) {
+    return res.tell(childName + ", is not a recognized child, please try again");
+  }
+  
+  var speechOutput = "Welcome home, " + childName + ". Your parent has been notified \
+                      of your safe arrival. ";
+  return helpers.getChores(res, user, childName, helpers.handleChildChores);  
+};
+
 module.exports = helpers;
+
