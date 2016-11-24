@@ -9,10 +9,37 @@ var registerIntentHandlers = function(app) {
   app.prototype.intentHandlers = {
 
     CheckInIntent: function (intent, session, res) {
-      rp(api.getUser(session.user.accessToken))
+      return rp(api.getUser(session.user.accessToken))
       .then(function(user) {
         var childName = intent.slots.FIRSTNAME.value;
-        return helpers.checkIn(res, user, childName, helpers.handleChildCheckIn);
+        
+        var handleChildChores = function(res, choreList, childNum) {
+          var speechOutput = "Welcome home, " + childName + ". Your parent has been notified \
+                              of your safe arrival. ";
+
+          if (choreList === null) {
+            return speechOutput + "You have no chores today!";
+          } else {
+            var repromptOutput = "If you'd like to receive a list of chores on your phone, \
+                                  please say, send chores.";
+            speechOutput += "Your chores today are... " + choreList + repromptOutput;
+            return speechOutput;
+          }
+        };
+
+        var handleChildCheckIn = function(res, alreadyCheckedIn, childName) {
+          if (alreadyCheckedIn) {
+            return childName + ", you have already been checked in!";
+          }
+          if (alreadyCheckedIn === undefined) {
+            return childName + ", is not a recognized child, please try again";
+          }
+
+          return helpers.getChores(res, user, childName, handleChildChores);  
+        };
+
+        var speechOutput = helpers.checkIn(res, user, childName, handleChildCheckIn);
+        return res.tell(speechOutput);
       })
       .catch(function(err) {
         return res.tell(err);

@@ -133,30 +133,5 @@ helpers.getChildren = function(user, cb) {
   return cb(speechOutput);
 };
 
-helpers.handleChildChores = function(res, choreList, childNum) {
-  if (choreList === null) {
-    speechOutput += "You have no chores today!";
-    return res.tell(speechOutput);
-  } else {
-    var repromptOutput = "If you'd like to receive a list of chores on your phone, \
-                          please say, send chores.";
-    speechOutput += "Your chores today are... " + choreList + repromptOutput;
-    return res.ask(speechOutput, repromptOutput);
-  }
-};
-
-helpers.handleChildCheckIn = function(res, alreadyCheckedIn, childName) {
-  if (alreadyCheckedIn) {
-    return res.tell(childName + ", you have already been checked in!");
-  }
-  if (alreadyCheckedIn === undefined) {
-    return res.tell(childName + ", is not a recognized child, please try again");
-  }
-  
-  var speechOutput = "Welcome home, " + childName + ". Your parent has been notified \
-                      of your safe arrival. ";
-  return helpers.getChores(res, user, childName, helpers.handleChildChores);  
-};
-
 module.exports = helpers;
 
