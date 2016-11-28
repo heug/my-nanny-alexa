@@ -9,52 +9,29 @@ var registerIntentHandlers = function(app) {
   app.prototype.intentHandlers = {
 
     CheckInIntent: function (intent, session, res) {
-      rp(api.getUser(session.user.accessToken))
+      rp.get(api.getUser(session.user.accessToken))
       .then(function(user) {
         var childName = intent.slots.FIRSTNAME.value;
         
-        var getUsersChild = function(user, childName) {
-          for (var i = 0; i < user.children.length; i++) {
-            if (user.children[i].name === childName) {
-              return user.children[i];
-            }
-          }
-        };
-
-        var choresToString = function(chores) {
-          var speechOutput = '';
-
-          for (var j = 0; j < user.children[i].chores.length; j++) {
-            var taskNum = j + 1;
-            var and = '';
-            if (chores.length > 1 && j === chores.length - 1) {
-              and = 'and ';
-            }
-            speechOutput += and + taskNum + ': ' + chores[j].title + '... ';
-          }
-
-          return speechOutput;
-        }
-
-        var child = getUsersChild(user, childName); 
+        var child = helpers.getUsersChild(user, childName); 
         if (child === undefined) {
           return res.tell(childName + ", is not a recognized child, please try again");
         }
 
         var speechOutput = "Welcome home, " + child.name + ". Your parent has been notified \
                            of your safe arrival. ";
-                           
+
         if (child.chores.length === 0) {
           return res.tell(speechOutput += "you have no chores today!");
         } else {
           var repromptOutput = "If you'd like to receive a list of chores on your phone, please say, \
             send chores.";
-          var choresAsString = choresToString(child.chores);
+          var choresAsString = helpers.choresToString(child.chores);
           return res.ask(speechOutput + choresAsString, repromptOutput);
         }
       })
       .catch(function(err) {
-        res.tell(err);
+        return res.tell(err);
       });
     },
     

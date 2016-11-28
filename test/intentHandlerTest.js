@@ -1,62 +1,135 @@
 var chai = require('chai');
 var expect = chai.expect;
+var sinon = require('sinon');
 
-var mock = require('mock-require');
-
-var getIntent = function(intentName) {
-  var registerIntentHandlers = require('../handlers/intentHandlers');
-  var intentHandler = registerIntentHandlers(function() {}).prototype
-                                                           .intentHandlers;
+var getIntent = function(root, intentName) {
+  var intentHandler = root(function() {}).prototype.intentHandlers;
   return intentHandler[intentName];  
 };
 
+var request = require('request-promise');
+var helpers = require('../modules/helpers');
+var BPromise = require('bluebird');
+
 describe('IntentHandlers', function() {
 
+  var intent = {
+    slots: {
+      FIRSTNAME: {
+        value: 'Batman'
+      }
+    }
+  };
+  var user = {
+    accessToken: '1234'
+  };
+  var session = {
+    user: user
+  };
+
   describe('CheckInIntent', function() {
-
-    var intent = {};
-    var user = {
-      accessToken = '1234'
-    };
-    var session = {
-      user: user
-    };
-  
-    it('should exist', function(done) {
-      var checkInIntent = getIntent('CheckInIntent');
-      expect(checkInIntent).to.be.a('function');
-      done();
-    });
-
-    describe('Successful request', function() {
-      mock('request-promise', function(obj) {
-        return Promise.resolve(user);
-      });
-
-      it('should return message when name is not recognized', function(done) {
-
-      });
-
-
-    });
-
-    describe('Unsuccessful request', function() {
-      mock('request-promise', function(obj) {
-        return Promise.reject('error');
-      });
+    it('should return res with error if session is invalid', function(done) {
+      var registerIntentHandlers = require('../handlers/intentHandlers');
+      var checkInIntent = getIntent(registerIntentHandlers, 'CheckInIntent');
       
-      it('should return error if api lookup fails', function(done) {
+      sinon.stub(request, 'get').returns(BPromise.reject('error'));
 
-        var checkInIntent = getIntent('CheckInIntent');
-
-        checkInIntent(intent, session, {
-          tell: function(data) {
-            expect(data).to.equal('error');
-            done();
-          }
-        });
+      checkInIntent(intent, session, {
+        tell: function(data) {
+          expect(data).to.equal('error');
+          request.get.restore();
+          done();
+        }
       });
     });
+
+    it('should return voice command for unrecognized child', function(done) {
+      var registerIntentHandlers = require('../handlers/intentHandlers');
+      var checkInIntent = getIntent(registerIntentHandlers, 'CheckInIntent');
+      
+      sinon.stub(request, 'get').returns(BPromise.resolve(user));
+      sinon.stub(helpers, 'getUsersChild').returns(undefined);
+
+      checkInIntent(intent, session, {
+        tell: function(data) {
+          expect(data).to.equal('Batman, is not a recognized child, please try again');
+          request.get.restore();
+          helpers.getUsersChild.restore();
+          done();
+        }
+      });
+    });
+
+    it('should return voice command with no chores if list is empty', function(done) {
+      var registerIntentHandlers = require('../handlers/intentHandlers');
+      var checkInIntent = getIntent(registerIntentHandlers, 'CheckInIntent');
+      
+      sinon.stub(request, 'get').returns(BPromise.resolve(user));
+      sinon.stub(helpers, 'getUsersChild').returns({
+        name: 'Batman',
+        chores: []
+      });
+      checkInIntent(intent, session, {
+        tell: function(data) {
+          expect(data).to.equal('Welcome home, Batman. Your parent has been notified \
+                           of your safe arrival. you have no chores today!');
+          request.get.restore();
+          helpers.getUsersChild.restore();
+          done();
+        }
+      });
+    });
+
+    it('should return correct voice command with one chore', function(done) {
+      var registerIntentHandlers = require('../handlers/intentHandlers');
+      var checkInIntent = getIntent(registerIntentHandlers, 'CheckInIntent');
+      
+      sinon.stub(request, 'get').returns(BPromise.resolve(user));
+      sinon.stub(helpers, 'getUsersChild').returns({
+        name: 'Batman',
+        chores: [{}]
+      });
+      sinon.stub(helpers, 'choresToString').returns('Voice command for chores');
+
+      checkInIntent(intent, session, {
+        ask: function(data, repeat) {
+          expect(data).to.equal('Welcome home, Batman. Your parent has been notified \
+                           of your safe arrival. Voice command for chores');
+          expect(repeat).to.equal('If you\'d like to receive a list of chores on your phone, please say, \
+            send chores.');
+          request.get.restore();
+          helpers.getUsersChild.restore();
+          helpers.choresToString.restore();
+          done();
+        }
+      });
+    });
+
+    it('should return correct voice command with two chores', function(done) {
+      var registerIntentHandlers = require('../handlers/intentHandlers');
+      var checkInIntent = getIntent(registerIntentHandlers, 'CheckInIntent');
+      
+      sinon.stub(request, 'get').returns(BPromise.resolve(user));
+      sinon.stub(helpers, 'getUsersChild').returns({
+        name: 'Batman',
+        chores: [{}]
+      });
+      sinon.stub(helpers, 'choresToString').returns('Voice command for chores');
+
+      checkInIntent(intent, session, {
+        ask: function(data, repeat) {
+          expect(data).to.equal('Welcome home, Batman. Your parent has been notified \
+                           of your safe arrival. Voice command for chores');
+          expect(repeat).to.equal('If you\'d like to receive a list of chores on your phone, please say, \
+            send chores.');
+          request.get.restore();
+          helpers.getUsersChild.restore();
+          helpers.choresToString.restore();
+          done();
+        }
+      });
+    });
+
   });
 });
   

@@ -6,45 +6,27 @@ helpers.randomize = function(phrases) {
   return phrases[Math.floor(Math.random() * phrases.length)]; 
 };
 
-// Check if child already checked in for the day
-helpers.checkIn = function(res, user, childName, cb) {
+helpers.getUsersChild = function(user, childName) {
   for (var i = 0; i < user.children.length; i++) {
     if (user.children[i].name === childName) {
-      return cb(false, childName);
-      // TODO: uncomment below once checkedIn status implemented
-      // if (user.children[i].checkedIn === true) {
-      //   // user.children[i].checkedIn = true;
-      //   return cb(true);
-      // } else {
-      //   return cb(false);
-      // }
+      return user.children[i];
     }
   }
-  return cb(res, undefined, childName);
 };
 
-// Return a list of chores and child id; null if child is not in account
-helpers.getChores = function(res, user, childName, cb) {
+helpers.choresToString = function(chores) {
   var speechOutput = '';
-  var childNum = '';
 
-  for (var i = 0; i < user.children.length; i++) {
-    if (user.children[i].name === childName) {
-      if (user.children[i].chores.length === 0) {
-        return cb(res, null);
-      }
-      childNum = user.children[i].phone;
-      for (var j = 0; j < user.children[i].chores.length; j++) {
-        var taskNum = j + 1;
-        var and = '';
-        if (user.children[i].chores.length > 1 && j === user.children[i].chores.length - 1) {
-          and = 'and ';
-        }
-        speechOutput += and + taskNum + ': ' + user.children[i].chores[j].title + '... ';
-      }
+  for (var j = 0; j < user.children[i].chores.length; j++) {
+    var taskNum = j + 1;
+    var and = '';
+    if (chores.length > 1 && j === chores.length - 1) {
+      and = 'and ';
     }
+    speechOutput += and + taskNum + ': ' + chores[j].title + '... ';
   }
-  return cb(res, speechOutput, childNum);
+
+  return speechOutput;
 };
 
 // Get a list of all uncompleted chores for a child
