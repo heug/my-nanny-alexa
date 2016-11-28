@@ -9,7 +9,7 @@ var registerIntentHandlers = function(app) {
   app.prototype.intentHandlers = {
 
     CheckInIntent: function (intent, session, res) {
-      rp.get(api.getUser(session.user.accessToken))
+      rp.get(api.getUser(session.user.accessToken).uri)
       .then(function(user) {
         var childName = intent.slots.FIRSTNAME.value;
         
