@@ -47,7 +47,7 @@ describe('IntentHandlers', function() {
       var registerIntentHandlers = require('../handlers/intentHandlers');
       var checkInIntent = getIntent(registerIntentHandlers, 'CheckInIntent');
       
-      sinon.stub(request, 'get').returns(BPromise.resolve(user));
+      sinon.stub(request, 'get').returns(BPromise.resolve(JSON.stringify(user)));
       sinon.stub(helpers, 'getUsersChild').returns(undefined);
 
       checkInIntent(intent, session, {
@@ -64,7 +64,7 @@ describe('IntentHandlers', function() {
       var registerIntentHandlers = require('../handlers/intentHandlers');
       var checkInIntent = getIntent(registerIntentHandlers, 'CheckInIntent');
       
-      sinon.stub(request, 'get').returns(BPromise.resolve(user));
+      sinon.stub(request, 'get').returns(BPromise.resolve(JSON.stringify(user)));
       sinon.stub(helpers, 'getUsersChild').returns({
         name: 'Batman',
         chores: []
@@ -84,7 +84,7 @@ describe('IntentHandlers', function() {
       var registerIntentHandlers = require('../handlers/intentHandlers');
       var checkInIntent = getIntent(registerIntentHandlers, 'CheckInIntent');
       
-      sinon.stub(request, 'get').returns(BPromise.resolve(user));
+      sinon.stub(request, 'get').returns(BPromise.resolve(JSON.stringify(user)));
       sinon.stub(helpers, 'getUsersChild').returns({
         name: 'Batman',
         chores: [{}]
@@ -109,7 +109,7 @@ describe('IntentHandlers', function() {
       var registerIntentHandlers = require('../handlers/intentHandlers');
       var checkInIntent = getIntent(registerIntentHandlers, 'CheckInIntent');
       
-      sinon.stub(request, 'get').returns(BPromise.resolve(user));
+      sinon.stub(request, 'get').returns(BPromise.resolve(JSON.stringify(user)));
       sinon.stub(helpers, 'getUsersChild').returns({
         name: 'Batman',
         chores: [{}]
