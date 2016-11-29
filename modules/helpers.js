@@ -1,6 +1,4 @@
 'use strict';
-var Promise = require('bluebird');
-
 var helpers = {};
 
 // Return a random phrase from an array of phrases
@@ -9,10 +7,6 @@ helpers.randomize = function(phrases) {
 };
 
 helpers.getUsersChild = function(user, childName) {
-  if (typeof user === 'string') {
-    user = JSON.parse(user);
-  }
-
   for (var i = 0; i < user.children.length; i++) {
     if (user.children[i].name === childName) {
       return user.children[i];

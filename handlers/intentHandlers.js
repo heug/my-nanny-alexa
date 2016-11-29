@@ -11,6 +11,10 @@ var registerIntentHandlers = function(app) {
     CheckInIntent: function (intent, session, res) {
       rp.get(api.getUser(session.user.accessToken).uri)
       .then(function(user) {
+        if(typeof user === 'string') {
+          user = JSON.parse(user);
+        }
+
         var childName = intent.slots.FIRSTNAME.value;
         
         var child = helpers.getUsersChild(user, childName); 
@@ -26,14 +30,11 @@ var registerIntentHandlers = function(app) {
         } else {
           var repromptOutput = "If you'd like to receive a list of chores on your phone, please say, \
             send chores.";
-          console.log('converting chores to string:', child.chores);
           var choresAsString = helpers.choresToString(child.chores);
-          console.log('converted:', choresAsString);
           return res.ask(speechOutput + choresAsString, repromptOutput);
         }
       })
       .catch(function(err) {
-        console.log('error', err);
         return res.tell(err);
       });
     },
