@@ -9,10 +9,8 @@ var registerIntentHandlers = function(app) {
   app.prototype.intentHandlers = {
 
     CheckInIntent: function (intent, session, res) {
-      console.log('starting request');
       rp.get(api.getUser(session.user.accessToken).uri)
       .then(function(user) {
-        console.log('found user', user);
         var childName = intent.slots.FIRSTNAME.value;
         
         var child = helpers.getUsersChild(user, childName); 
@@ -33,10 +31,8 @@ var registerIntentHandlers = function(app) {
         }
       })
       .catch(function(err) {
-        console.log('an error occured', err);
         return res.tell(err);
       });
-      console.log('we should never get here?');
     },
     
     "ChoreListIntent": function (intent, session, res) {
