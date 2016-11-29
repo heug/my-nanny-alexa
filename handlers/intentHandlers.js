@@ -11,6 +11,7 @@ var registerIntentHandlers = function(app) {
     CheckInIntent: function (intent, session, res) {
       rp.get(api.getUser(session.user.accessToken).uri)
       .then(function(user) {
+        console.log('found user');
         var childName = intent.slots.FIRSTNAME.value;
         
         var child = helpers.getUsersChild(user, childName); 
@@ -21,16 +22,19 @@ var registerIntentHandlers = function(app) {
         var speechOutput = "Welcome home, " + child.name + ". Your parent has been notified \
                            of your safe arrival. ";
 
-        if (child.chores.length === 0) {
+        if (child.chores === undefined || child.chores.length === 0) {
           return res.tell(speechOutput += "you have no chores today!");
         } else {
           var repromptOutput = "If you'd like to receive a list of chores on your phone, please say, \
             send chores.";
+          console.log('converting chores to string:', child.chores);
           var choresAsString = helpers.choresToString(child.chores);
+          console.log('converted:', choresAsString);
           return res.ask(speechOutput + choresAsString, repromptOutput);
         }
       })
       .catch(function(err) {
+        console.log('error', err);
         return res.tell(err);
       });
     },

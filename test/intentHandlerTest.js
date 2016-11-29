@@ -80,6 +80,26 @@ describe('IntentHandlers', function() {
       });
     });
 
+    it('should return voice command with chores list undefined', function(done) {
+      var registerIntentHandlers = require('../handlers/intentHandlers');
+      var checkInIntent = getIntent(registerIntentHandlers, 'CheckInIntent');
+      
+      sinon.stub(request, 'get').returns(BPromise.resolve(user));
+      sinon.stub(helpers, 'getUsersChild').returns({
+        name: 'Batman',
+        chores: undefined
+      });
+      checkInIntent(intent, session, {
+        tell: function(data) {
+          expect(data).to.equal('Welcome home, Batman. Your parent has been notified \
+                           of your safe arrival. you have no chores today!');
+          request.get.restore();
+          helpers.getUsersChild.restore();
+          done();
+        }
+      });
+    });
+
     it('should return correct voice command with one chore', function(done) {
       var registerIntentHandlers = require('../handlers/intentHandlers');
       var checkInIntent = getIntent(registerIntentHandlers, 'CheckInIntent');
