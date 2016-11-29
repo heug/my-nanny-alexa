@@ -50,12 +50,13 @@ var registerIntentHandlers = function(app) {
           return res.tell(childName + ", is not a recognized child, please try again");
         }
 
-        if (child.chores.length === 0) {
+        var chores = helpers.getRemainingChores(child.chores);
+        if (chores.length === 0) {
           return res.tell(speechOutput += 'You have no more chores today!');
         }
 
         speechOutput += 'Your remaining chores today are...';
-        speechOutput += helpers.remainingChoresToString(child.chores);
+        speechOutput += helpers.remainingChoresToString(chores);
         res.tell(speechOutput);
       })
       .catch(function(err) {

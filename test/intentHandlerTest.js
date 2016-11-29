@@ -192,8 +192,9 @@ describe('IntentHandlers', function() {
       
       sinon.stub(request, 'get').returns(BPromise.resolve(JSON.stringify(user)));
       sinon.stub(helpers, 'getUsersChild').returns({
-        chores: [{}]
+        chores: []
       });
+      sinon.stub(helpers, 'getRemainingChores').returns([{}]);
       sinon.stub(helpers, 'remainingChoresToString').returns('more chores');
 
       ChoreListIntent(intent, session, {
@@ -201,6 +202,7 @@ describe('IntentHandlers', function() {
           expect(data).to.equal('Batman, Your remaining chores today are...more chores');
           request.get.restore();
           helpers.getUsersChild.restore();
+          helpers.getRemainingChores.restore();
           helpers.remainingChoresToString.restore();
           done();
         }

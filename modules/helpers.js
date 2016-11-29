@@ -29,13 +29,25 @@ helpers.choresToString = function(chores) {
   return speechOutput;
 };
 
+helpers.getRemainingChores = function(chores) {
+  var remaining = [];
+
+  for (var i = 0; i < chores.length; i++) {
+    if (!chores[i].completed) {
+      remaining.push({index: i + 1, chore: chores[i]});
+    }
+  }
+
+  return remaining;
+};
+
 // Get a list of all uncompleted chores for a child
 helpers.remainingChoresToString = function(chores) {
   var speechOutput = '';
 
   for (var i = 0; i < chores.length; i++) {
-    if (!chores[i].completed) {
-      speechOutput += (i + 1) + ': ' + chores[i].title + '... ';
+    if (!chores[i].chore.completed) {
+      speechOutput += chores[i].index + ': ' + chores[i].chore.title + '... ';
     }
   }
 
