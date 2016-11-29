@@ -11,9 +11,10 @@ var registerIntentHandlers = function(app) {
     CheckInIntent: function (intent, session, res) {
       rp.get(api.getUser(session.user.accessToken).uri)
       .then(function(user) {
-        console.log('found user');
         var childName = intent.slots.FIRSTNAME.value;
         
+        console.log('passing in user', user);
+        console.log('passing in child name', childName);
         var child = helpers.getUsersChild(user, childName); 
         if (child === undefined) {
           return res.tell(childName + ", is not a recognized child, please try again");
