@@ -9,11 +9,11 @@ var registerIntentHandlers = function(app) {
   app.prototype.intentHandlers = {
 
     CheckInIntent: function (intent, session, res) {
+      var childName = intent.slots.FIRSTNAME.value;
+
       rp.get(api.getUser(session.user.accessToken).uri)
       .then(function(user) {
         user = JSON.parse(user);
-
-        var childName = intent.slots.FIRSTNAME.value;
         
         var child = helpers.getUsersChild(user, childName); 
         if (child === undefined) {
@@ -37,22 +37,26 @@ var registerIntentHandlers = function(app) {
       });
     },
     
-    "ChoreListIntent": function (intent, session, res) {
+    ChoreListIntent: function (intent, session, res) {
       var childName = intent.slots.FIRSTNAME.value;
       var speechOutput = childName + ", ";
-      
-      rp(api.getUser(session.user.accessToken))
+
+      rp.get(api.getUser(session.user.accessToken).uri)
       .then(function(user) {
-        helpers.remainingChores(user, childName, function(choreList) {
-          if (choreList === '') {
-            return res.tell(childName + ", is not a recognized child, please try again.");
-          } else if (choreList === null) {
-            speechOutput += 'You have no more chores today!';
-          } else {
-            speechOutput += "Your remaining chores today are to..." + choreList;
-          }            
-          res.tell(speechOutput);
-        });
+        user = JSON.parse(user);
+        //Get child's chores
+        var child = helpers.getUsersChild(user, childName);
+        if (child === undefined) {
+          return res.tell(childName + ", is not a recognized child, please try again");
+        }
+
+        if (child.chores.length === 0) {
+          return res.tell(speechOutput += 'You have no more chores today!');
+        }
+
+        speechOutput += 'Your remaining chores today are...';
+        speechOutput += helpers.remainingChoresToString(child.chores);
+        res.tell(speechOutput);
       })
       .catch(function(err) {
         res.tell(err);
