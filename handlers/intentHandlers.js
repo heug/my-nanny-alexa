@@ -14,8 +14,11 @@ var registerIntentHandlers = function(app) {
         console.log('found user');
         var childName = intent.slots.FIRSTNAME.value;
         
-        var child = helpers.getUsersChild(user, childName); 
-        if (child === undefined) {
+        return helpers.getUsersChild(user, childName); 
+      }).then(function(child) {
+        console.log('users child');
+        
+        if (child === null) {
           return res.tell(childName + ", is not a recognized child, please try again");
         }
 
