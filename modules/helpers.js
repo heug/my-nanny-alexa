@@ -30,34 +30,16 @@ helpers.choresToString = function(chores) {
 };
 
 // Get a list of all uncompleted chores for a child
-helpers.remainingChores = function(user, childName, cb) {
+helpers.remainingChoresToString = function(chores) {
   var speechOutput = '';
-  var remChores = [];
-  var and = '';
 
-  for (var i = 0; i < user.children.length; i++) {
-    if (user.children[i].name === childName) {
-      if (user.children[i].chores.length === 0) {
-        return cb(null);
-      }
-      
-      for (var j = 0; j < user.children[i].chores.length; j++) {
-        var taskNum = j + 1;
-        if (!user.children[i].chores[j].completed) {
-          remChores.push([taskNum, user.children[i].chores[j].title]);
-        }
-      }
-
-      for (var k = 0; k < remChores.length; k++) {
-        if (remChores.length > 1 && k === remChores.length - 1) {
-          and = 'and ';
-        }
-        speechOutput += and + remChores[k][0] + ',' + remChores[k][1] + '...';
-      }
-      
+  for (var i = 0; i < chores.length; i++) {
+    if (!chores[i].completed) {
+      speechOutput += (i + 1) + ': ' + chores[i].title + '... ';
     }
   }
-  return cb(speechOutput);
+
+  return speechOutput;
 };
 
 // Get the referenced chore and cb with name and data for chore PUT

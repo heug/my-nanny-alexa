@@ -118,4 +118,19 @@ describe('Helpers', function() {
       done();
     });
   });
+
+  describe('remainingChoresToString', function() {
+    it('should generate empty string for empty list', function(done) {
+      var speech = helpers.remainingChoresToString([]);
+      expect(speech).to.equal('');
+      done();
+    });
+
+    it('should generate the correct voice command', function(done) {
+      var speech = helpers.remainingChoresToString(user.children[0].chores);
+      expect(speech).to.equal('1: Buy candy at duty free... ' +
+                              '3: Enjoy the two hours of daylight... ');
+      done();
+    });
+  });
 });
