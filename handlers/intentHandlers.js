@@ -154,22 +154,20 @@ var registerIntentHandlers = function(app) {
       });
     },
 
-    AMAZON: {
-      HelpIntent: function (intent, session, res) {
-        var speechOutput = "You can say things like, Alex is home, what are Alex chores, Alex \
-          finished chore one, or, you can say exit... Now, what can I help you with?";
-        res.ask(speechOutput, speechOutput);
-      },
+    "AMAZON.HelpIntent": function (intent, session, res) {
+      var speechOutput = "You can say things like, Alex is home, what are Alex chores, Alex \
+        finished chore one, or, you can say exit... Now, what can I help you with?";
+      res.ask(speechOutput, speechOutput);
+    },
 
-      StopIntent: function (intent, session, res) {
-        var speechOutput = "Okay.";
-        res.tell(speechOutput);
-      },
-      
-      CancelIntent: function (intent, session, res) {
-        var speechOutput = "Okay.";
-        res.tell(speechOutput);
-      }
+    "AMAZON.StopIntent": function (intent, session, res) {
+      var speechOutput = "Okay.";
+      res.tell(speechOutput);
+    },
+
+    "AMAZON.CancelIntent": function (intent, session, res) {
+      var speechOutput = "Okay.";
+      res.tell(speechOutput);
     }
   }
 
