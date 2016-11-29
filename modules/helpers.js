@@ -65,23 +65,6 @@ helpers.finishChore = function(user, childName, choreNum, cb) {
   return cb('');
 };
 
-// Get details for a single chore
-helpers.choreDetails = function(user, childName, choreNum, cb) {
-  for (var i = 0; i < user.children.length; i++) {
-    if (user.children[i].name === childName) {
-      if (user.children[i].chores[choreNum - 1]) {
-        return cb(
-          user.children[i].chores[choreNum - 1].title, 
-          user.children[i].chores[choreNum - 1].details
-        );
-      } else {
-        return cb(null);
-      }
-    }
-  }
-  return cb(undefined);
-};
-
 // Return a list of children
 helpers.getChildren = function(user, cb) {
   var speechOutput = '';

@@ -71,25 +71,31 @@ var registerIntentHandlers = function(app) {
       // });
     },
 
-    "ChoreDetailsIntent": function (intent, session, res) {
+    ChoreDetailsIntent: function (intent, session, res) {
       var childName = intent.slots.FIRSTNAME.value;
       var choreNum = intent.slots.CHORE.value;
 
-      rp(api.getUser(session.user.accessToken))
+      rp.get(api.getUser(session.user.accessToken).uri)
       .then(function(user) {
-        helpers.choreDetails(user, childName, choreNum, function(title, details) {
-          if (title === undefined) {
-            res.tell(childName + ", is not a recognized child, please try again.");
-          } else if (title === null || details === '') {
-            res.tell('I do not have any details on that chore');
-          } else {
-            res.tell('chore number ' + choreNum + ',' + title + '...' + details);
-          }
-        });
-      })
-      .catch(function(err) {
-        res.tell(err);
-      })
+        user = JSON.parse(user);
+
+        var child = helpers.getUsersChild(user, childName);
+        if(child === undefined) {
+          return res.tell(childName + ", is not a recognized child, please try again.");
+        }
+
+        var chore = child.chores[choreNum - 1];
+        if (chore === undefined) {
+          return res.tell('I do not have any details on that chore');
+        }
+        return res.tell('Chore number ' +
+                        choreNum + ',' +
+                        chore.title + '...' +
+                        chore.details);
+
+      }).catch(function(err) {
+        return res.tell(err);
+      });
     },
 
     "FinishChoreIntent": function (intent, session, res) {
