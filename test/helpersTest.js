@@ -80,6 +80,14 @@ describe('Helpers', function() {
       expect(child).to.equal(undefined);
       done();
     });
+
+    it('should handle string object input', function(done) {
+      var child = helpers.getUsersChild(JSON.stringify(user), 'Robert');
+      expect(child.id).to.equal(1);
+      expect(child.name).to.equal('Robert');
+      expect(child.phone).to.equal('4159105695');
+      done();
+    })
   });
 
   describe('choresToString', function() {

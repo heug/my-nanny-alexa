@@ -13,8 +13,6 @@ var registerIntentHandlers = function(app) {
       .then(function(user) {
         var childName = intent.slots.FIRSTNAME.value;
         
-        console.log('passing in user', user);
-        console.log('passing in child name', childName);
         var child = helpers.getUsersChild(user, childName); 
         if (child === undefined) {
           return res.tell(childName + ", is not a recognized child, please try again");
@@ -23,7 +21,7 @@ var registerIntentHandlers = function(app) {
         var speechOutput = "Welcome home, " + child.name + ". Your parent has been notified \
                            of your safe arrival. ";
 
-        if (child.chores === undefined || child.chores.length === 0) {
+        if (child.chores.length === 0) {
           return res.tell(speechOutput += "you have no chores today!");
         } else {
           var repromptOutput = "If you'd like to receive a list of chores on your phone, please say, \

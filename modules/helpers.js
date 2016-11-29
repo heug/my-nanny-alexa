@@ -9,14 +9,15 @@ helpers.randomize = function(phrases) {
 };
 
 helpers.getUsersChild = function(user, childName) {
-  console.log('got user', user);
-  console.log('got child name', childName);
+  if (typeof user === 'string') {
+    user = JSON.parse(user);
+  }
+
   for (var i = 0; i < user.children.length; i++) {
     if (user.children[i].name === childName) {
       return user.children[i];
     }
-    return Promise.resolve(null);
-  });
+  };
 };
 
 helpers.choresToString = function(chores) {
