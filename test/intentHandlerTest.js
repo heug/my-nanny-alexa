@@ -137,11 +137,11 @@ describe('IntentHandlers', function() {
   describe('ChoreListIntent', function() {
     it('should return res with error if session is invalid', function(done) {
       var registerIntentHandlers = require('../handlers/intentHandlers');
-      var checkInIntent = getIntent(registerIntentHandlers, 'ChoreListIntent');
+      var ChoreListIntent = getIntent(registerIntentHandlers, 'ChoreListIntent');
       
       sinon.stub(request, 'get').returns(BPromise.reject('error'));
 
-      checkInIntent(intent, session, {
+      ChoreListIntent(intent, session, {
         tell: function(data) {
           expect(data).to.equal('error');
           request.get.restore();
@@ -152,12 +152,12 @@ describe('IntentHandlers', function() {
 
     it('should return voice command for unrecognized child', function(done) {
       var registerIntentHandlers = require('../handlers/intentHandlers');
-      var checkInIntent = getIntent(registerIntentHandlers, 'ChoreListIntent');
+      var ChoreListIntent = getIntent(registerIntentHandlers, 'ChoreListIntent');
       
       sinon.stub(request, 'get').returns(BPromise.resolve(JSON.stringify(user)));
       sinon.stub(helpers, 'getUsersChild').returns(undefined);
 
-      checkInIntent(intent, session, {
+      ChoreListIntent(intent, session, {
         tell: function(data) {
           expect(data).to.equal('Batman, is not a recognized child, please try again');
           request.get.restore();
@@ -169,14 +169,14 @@ describe('IntentHandlers', function() {
 
     it('should return voice command for no more chores', function(done) {
       var registerIntentHandlers = require('../handlers/intentHandlers');
-      var checkInIntent = getIntent(registerIntentHandlers, 'ChoreListIntent');
+      var ChoreListIntent = getIntent(registerIntentHandlers, 'ChoreListIntent');
       
       sinon.stub(request, 'get').returns(BPromise.resolve(JSON.stringify(user)));
       sinon.stub(helpers, 'getUsersChild').returns({
         chores: []
       });
 
-      checkInIntent(intent, session, {
+      ChoreListIntent(intent, session, {
         tell: function(data) {
           expect(data).to.equal('Batman, You have no more chores today!');
           request.get.restore();
@@ -188,7 +188,7 @@ describe('IntentHandlers', function() {
 
     it('should return voice command for more chore(s)', function(done) {
       var registerIntentHandlers = require('../handlers/intentHandlers');
-      var checkInIntent = getIntent(registerIntentHandlers, 'ChoreListIntent');
+      var ChoreListIntent = getIntent(registerIntentHandlers, 'ChoreListIntent');
       
       sinon.stub(request, 'get').returns(BPromise.resolve(JSON.stringify(user)));
       sinon.stub(helpers, 'getUsersChild').returns({
@@ -196,7 +196,7 @@ describe('IntentHandlers', function() {
       });
       sinon.stub(helpers, 'remainingChoresToString').returns('more chores');
 
-      checkInIntent(intent, session, {
+      ChoreListIntent(intent, session, {
         tell: function(data) {
           expect(data).to.equal('Batman, Your remaining chores today are...more chores');
           request.get.restore();
@@ -211,11 +211,11 @@ describe('IntentHandlers', function() {
   describe('ChoreDetailsIntent', function() {
     it('should return res with error if session is invalid', function(done) {
       var registerIntentHandlers = require('../handlers/intentHandlers');
-      var checkInIntent = getIntent(registerIntentHandlers, 'ChoreDetailsIntent');
+      var ChoreDetailsIntent = getIntent(registerIntentHandlers, 'ChoreDetailsIntent');
       
       sinon.stub(request, 'get').returns(BPromise.reject('error'));
 
-      checkInIntent(intent, session, {
+      ChoreDetailsIntent(intent, session, {
         tell: function(data) {
           expect(data).to.equal('error');
           request.get.restore();
@@ -226,12 +226,12 @@ describe('IntentHandlers', function() {
 
     it('should return voice command for unrecognized child', function(done) {
       var registerIntentHandlers = require('../handlers/intentHandlers');
-      var checkInIntent = getIntent(registerIntentHandlers, 'ChoreDetailsIntent');
+      var ChoreDetailsIntent = getIntent(registerIntentHandlers, 'ChoreDetailsIntent');
       
       sinon.stub(request, 'get').returns(BPromise.resolve(JSON.stringify(user)));
       sinon.stub(helpers, 'getUsersChild').returns(undefined);
 
-      checkInIntent(intent, session, {
+      ChoreDetailsIntent(intent, session, {
         tell: function(data) {
           expect(data).to.equal('Batman, is not a recognized child, please try again.');
           request.get.restore();
@@ -243,14 +243,14 @@ describe('IntentHandlers', function() {
 
     it('should return voice command for unrecognized chore', function(done) {
       var registerIntentHandlers = require('../handlers/intentHandlers');
-      var checkInIntent = getIntent(registerIntentHandlers, 'ChoreDetailsIntent');
+      var ChoreDetailsIntent = getIntent(registerIntentHandlers, 'ChoreDetailsIntent');
       
       sinon.stub(request, 'get').returns(BPromise.resolve(JSON.stringify(user)));
       sinon.stub(helpers, 'getUsersChild').returns({
         chores: []
       });
 
-      checkInIntent(intent, session, {
+      ChoreDetailsIntent(intent, session, {
         tell: function(data) {
           expect(data).to.equal('I do not have any details on that chore');
           request.get.restore();
@@ -262,7 +262,7 @@ describe('IntentHandlers', function() {
 
     it('should return voice command for recognized chore', function(done) {
       var registerIntentHandlers = require('../handlers/intentHandlers');
-      var checkInIntent = getIntent(registerIntentHandlers, 'ChoreDetailsIntent');
+      var ChoreDetailsIntent = getIntent(registerIntentHandlers, 'ChoreDetailsIntent');
       
       sinon.stub(request, 'get').returns(BPromise.resolve(JSON.stringify(user)));
       sinon.stub(helpers, 'getUsersChild').returns({
@@ -276,7 +276,7 @@ describe('IntentHandlers', function() {
         }]
       });
 
-      checkInIntent(intent, session, {
+      ChoreDetailsIntent(intent, session, {
         tell: function(data) {
           expect(data).to.equal('Chore number 1,Buy candy at duty free...' +
                                 'Norwegian taxes are criminal');
