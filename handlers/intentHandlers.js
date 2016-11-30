@@ -108,6 +108,32 @@ var registerIntentHandlers = function(app) {
       var childName = intent.slots.FIRSTNAME.value;
       var choreNum = intent.slots.CHORE.value;
 
+      rp.get(api.getUser(session.user.accessToken).uri)
+      .then(function(user) {
+        user = JSON.parse(user);
+
+        var child = helpers.getUsersChild(user, childName);
+        if (child === undefined) {
+          return res.tell(childName + ", is not a recognized child, please try again");
+        }
+
+        var remainingChores = helpers.getRemainingChores(child.chores);
+        if (remainingChores.length === 0) {
+          return res.tell(speechOutput += 'you have no chores today!');
+        }
+
+        var chore = helpers.getChore(remainingChores, choreNum);
+        if (chore === undefined) {
+          return res.tell('Chore ' + choreNum + ' has already been completed!');
+        }
+
+        res.tell('change status');
+
+      }).catch(function(error) {
+        res.tell(error);
+      });
+
+/*
       rp(api.getUser(session.user.accessToken))
       .then(function(user) {
         helpers.finishChore(user, childName, choreNum, function(status, data) {
@@ -134,6 +160,7 @@ var registerIntentHandlers = function(app) {
       .catch(function(err) {
         res.tell(err);
       });
+*/
     },
 
     "PurposeIntent": function (intent, session, res) {

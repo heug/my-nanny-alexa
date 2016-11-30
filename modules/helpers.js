@@ -17,7 +17,7 @@ helpers.getUsersChild = function(user, childName) {
 helpers.choresToString = function(chores) {
   var speechOutput = '';
 
-  for (var j = 0; j < chores.leng th; j++) {
+  for (var j = 0; j < chores.length; j++) {
     var taskNum = j + 1;
     var and = '';
     if (chores.length > 1 && j === chores.length - 1) {
@@ -29,19 +29,27 @@ helpers.choresToString = function(chores) {
   return speechOutput;
 };
 
+helpers.getChore = function(chores, index) {
+  for (var i = 0; i < chores.length; i++) {
+    if (chores[i].index === (index - 1)) {
+      return chores[i].chore;
+    }
+  }
+};
+
 helpers.getRemainingChores = function(chores) {
-  var chores = [];
+  var remainingChores = [];
 
   for (var i = 0; i < chores.length; i++) {
     if (!chores[i].completed) {
-      chores.push({
+      remainingChores.push({
         index: i,
         chore: chores[i]
       });
     }
   }
 
-  return chores;
+  return remainingChores;
 };
 
 // Get a list of all uncompleted chores for a child
