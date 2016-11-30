@@ -119,6 +119,21 @@ describe('Helpers', function() {
     });
   });
 
+  describe('getRemainingChores', function() {
+    it('should return empty array if no chores', function() {
+      var chores = helpers.getRemainingChores([]);
+      expect(chores.length).to.equal(0);
+    });
+
+    it('should return the correct chores', function() {
+      var chores = helpers.getRemainingChores(user.children[0].chores);
+      expect(chores[0].index).to.equal(1);
+      expect(chores[0].chore.title).to.equal('Buy candy at duty free');
+      expect(chores[1].index).to.equal(3);
+      expect(chores[1].chore.title).to.equal('Enjoy the two hours of daylight');
+    });
+  });
+
   describe('remainingChoresToString', function() {
     it('should generate empty string for empty list', function(done) {
       var speech = helpers.remainingChoresToString([]);

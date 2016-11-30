@@ -208,7 +208,7 @@ describe('IntentHandlers', function() {
       
       sinon.stub(request, 'get').returns(BPromise.resolve(JSON.stringify(user)));
       sinon.stub(helpers, 'getUsersChild').returns({
-        chores: [{}]
+        chores: []
       });
       sinon.stub(helpers, 'getRemainingChores').returns([{}]);
       sinon.stub(helpers, 'remainingChoresToString').returns('more chores');

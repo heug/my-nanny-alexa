@@ -17,7 +17,7 @@ helpers.getUsersChild = function(user, childName) {
 helpers.choresToString = function(chores) {
   var speechOutput = '';
 
-  for (var j = 0; j < chores.length; j++) {
+  for (var j = 0; j < chores.leng th; j++) {
     var taskNum = j + 1;
     var and = '';
     if (chores.length > 1 && j === chores.length - 1) {
