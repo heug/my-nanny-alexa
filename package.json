@@ -4,6 +4,7 @@
   "description": "Child Management Application",
   "author": "Dystopian Smurfs, Hack Reactor, 2016",
   "dependencies": {
+    "bluebird": "^3.4.6",
     "request": "^2.78.0",
     "request-promise": "^4.1.1",
     "twilio": "^2.11.0"
