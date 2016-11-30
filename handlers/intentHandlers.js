@@ -17,20 +17,21 @@ var registerIntentHandlers = function(app) {
         
         var child = helpers.getUsersChild(user, childName); 
         if (child === undefined) {
-          return res.tell(childName + ", is not a recognized child, please try again");
+          return res.tell(childName + ', is not a recognized child, please try again');
         }
 
-        var speechOutput = "Welcome home, " + child.name + ". Your parent has been notified \
-                           of your safe arrival. ";
+        var speechOutput = 'Welcome home, ' + child.name + '. Your parent has been notified ' +
+                           'of your safe arrival. ';
 
-        if (child.chores.length === 0) {
-          return res.tell(speechOutput += "you have no chores today!");
-        } else {
-          var repromptOutput = "If you'd like to receive a list of chores on your phone, please say, \
-            send chores.";
-          var choresAsString = helpers.choresToString(child.chores);
-          return res.ask(speechOutput + choresAsString, repromptOutput);
+        var remainingChores = helpers.getRemainingChores(child.chores);
+        if (remainingChores.length === 0) {
+          return res.tell(speechOutput += 'you have no chores today!');
         }
+
+        var repromptOutput = 'If you\'d like to receive a list of chores on your phone, ' +
+                             'please say, send chores.';
+        var choresAsString = helpers.remainingChoresToString(child.chores);
+        return res.ask(speechOutput + choresAsString, repromptOutput);
       })
       .catch(function(err) {
         return res.tell(err);
@@ -50,12 +51,13 @@ var registerIntentHandlers = function(app) {
           return res.tell(childName + ", is not a recognized child, please try again");
         }
 
-        if (child.chores.length === 0) {
-          return res.tell(speechOutput += 'You have no more chores today!');
+        var remainingChores = helpers.getRemainingChores(child.chores);
+        if (remainingChores.length === 0) {
+          return res.tell(speechOutput += 'you have no chores today!');
         }
-
+        
         speechOutput += 'Your remaining chores today are...';
-        speechOutput += helpers.remainingChoresToString(child.chores);
+        speechOutput += helpers.remainingChoresToString(remainingChores);
         res.tell(speechOutput);
       })
       .catch(function(err) {

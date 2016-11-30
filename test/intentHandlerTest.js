@@ -39,8 +39,9 @@ describe('IntentHandlers', function() {
 
       checkInIntent(intent, session, {
         tell: function(data) {
-          expect(data).to.equal('error');
           request.get.restore();
+
+          expect(data).to.equal('error');
           done();
         }
       });
@@ -55,9 +56,10 @@ describe('IntentHandlers', function() {
 
       checkInIntent(intent, session, {
         tell: function(data) {
-          expect(data).to.equal('Batman, is not a recognized child, please try again');
           request.get.restore();
           helpers.getUsersChild.restore();
+
+          expect(data).to.equal('Batman, is not a recognized child, please try again');
           done();
         }
       });
@@ -72,12 +74,17 @@ describe('IntentHandlers', function() {
         name: 'Batman',
         chores: []
       });
+      sinon.stub(helpers, 'getRemainingChores').returns([]);
+
       checkInIntent(intent, session, {
         tell: function(data) {
-          expect(data).to.equal('Welcome home, Batman. Your parent has been notified \
-                           of your safe arrival. you have no chores today!');
+          console.log(data);
           request.get.restore();
           helpers.getUsersChild.restore();
+          helpers.getRemainingChores.restore();
+
+          expect(data).to.equal('Welcome home, Batman. Your parent has been notified ' +
+                                'of your safe arrival. you have no chores today!');
           done();
         }
       });
@@ -92,17 +99,20 @@ describe('IntentHandlers', function() {
         name: 'Batman',
         chores: [{}]
       });
-      sinon.stub(helpers, 'choresToString').returns('Voice command for chores');
+      sinon.stub(helpers, 'getRemainingChores').returns([{}]);
+      sinon.stub(helpers, 'remainingChoresToString').returns('Voice command for chores');
 
       checkInIntent(intent, session, {
         ask: function(data, repeat) {
-          expect(data).to.equal('Welcome home, Batman. Your parent has been notified \
-                           of your safe arrival. Voice command for chores');
-          expect(repeat).to.equal('If you\'d like to receive a list of chores on your phone, please say, \
-            send chores.');
           request.get.restore();
           helpers.getUsersChild.restore();
-          helpers.choresToString.restore();
+          helpers.getRemainingChores.restore();
+          helpers.remainingChoresToString.restore();
+
+          expect(data).to.equal('Welcome home, Batman. Your parent has been notified ' +
+                                'of your safe arrival. Voice command for chores');
+          expect(repeat).to.equal('If you\'d like to receive a list of chores on your phone, please say, ' +
+                                  'send chores.');
           done();
         }
       });
@@ -117,17 +127,20 @@ describe('IntentHandlers', function() {
         name: 'Batman',
         chores: [{}]
       });
-      sinon.stub(helpers, 'choresToString').returns('Voice command for chores');
+      sinon.stub(helpers, 'getRemainingChores').returns([{}]);
+      sinon.stub(helpers, 'remainingChoresToString').returns('Voice command for chores');
 
       checkInIntent(intent, session, {
         ask: function(data, repeat) {
-          expect(data).to.equal('Welcome home, Batman. Your parent has been notified \
-                           of your safe arrival. Voice command for chores');
-          expect(repeat).to.equal('If you\'d like to receive a list of chores on your phone, please say, \
-            send chores.');
           request.get.restore();
           helpers.getUsersChild.restore();
-          helpers.choresToString.restore();
+          helpers.getRemainingChores.restore();
+          helpers.remainingChoresToString.restore();
+
+          expect(data).to.equal('Welcome home, Batman. Your parent has been notified ' +
+                                'of your safe arrival. Voice command for chores');
+          expect(repeat).to.equal('If you\'d like to receive a list of chores on your phone, ' +
+                                  'please say, send chores.');
           done();
         }
       });
@@ -143,8 +156,9 @@ describe('IntentHandlers', function() {
 
       ChoreListIntent(intent, session, {
         tell: function(data) {
-          expect(data).to.equal('error');
           request.get.restore();
+
+          expect(data).to.equal('error');
           done();
         }
       });
@@ -159,9 +173,10 @@ describe('IntentHandlers', function() {
 
       ChoreListIntent(intent, session, {
         tell: function(data) {
-          expect(data).to.equal('Batman, is not a recognized child, please try again');
           request.get.restore();
           helpers.getUsersChild.restore();
+
+          expect(data).to.equal('Batman, is not a recognized child, please try again');
           done();
         }
       });
@@ -178,9 +193,10 @@ describe('IntentHandlers', function() {
 
       ChoreListIntent(intent, session, {
         tell: function(data) {
-          expect(data).to.equal('Batman, You have no more chores today!');
           request.get.restore();
           helpers.getUsersChild.restore();
+
+          expect(data).to.equal('Batman, you have no chores today!');
           done();
         }
       });
@@ -194,14 +210,18 @@ describe('IntentHandlers', function() {
       sinon.stub(helpers, 'getUsersChild').returns({
         chores: [{}]
       });
+      sinon.stub(helpers, 'getRemainingChores').returns([{}]);
       sinon.stub(helpers, 'remainingChoresToString').returns('more chores');
 
       ChoreListIntent(intent, session, {
         tell: function(data) {
-          expect(data).to.equal('Batman, Your remaining chores today are...more chores');
+          console.log(data);
           request.get.restore();
           helpers.getUsersChild.restore();
+          helpers.getRemainingChores.restore();
           helpers.remainingChoresToString.restore();
+
+          expect(data).to.equal('Batman, Your remaining chores today are...more chores');
           done();
         }
       });
@@ -217,8 +237,9 @@ describe('IntentHandlers', function() {
 
       ChoreDetailsIntent(intent, session, {
         tell: function(data) {
-          expect(data).to.equal('error');
           request.get.restore();
+
+          expect(data).to.equal('error');
           done();
         }
       });
@@ -233,9 +254,10 @@ describe('IntentHandlers', function() {
 
       ChoreDetailsIntent(intent, session, {
         tell: function(data) {
-          expect(data).to.equal('Batman, is not a recognized child, please try again.');
           request.get.restore();
           helpers.getUsersChild.restore();
+
+          expect(data).to.equal('Batman, is not a recognized child, please try again.');
           done();
         }
       });
@@ -252,9 +274,10 @@ describe('IntentHandlers', function() {
 
       ChoreDetailsIntent(intent, session, {
         tell: function(data) {
-          expect(data).to.equal('I do not have any details on that chore');
           request.get.restore();
           helpers.getUsersChild.restore();
+
+          expect(data).to.equal('I do not have any details on that chore');
           done();
         }
       });
@@ -278,10 +301,11 @@ describe('IntentHandlers', function() {
 
       ChoreDetailsIntent(intent, session, {
         tell: function(data) {
-          expect(data).to.equal('Chore number 1,Buy candy at duty free...' +
-                                'Norwegian taxes are criminal');
           request.get.restore();
           helpers.getUsersChild.restore();
+
+          expect(data).to.equal('Chore number 1,Buy candy at duty free...' +
+                                'Norwegian taxes are criminal');
           done();
         }
       });

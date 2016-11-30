@@ -127,7 +127,13 @@ describe('Helpers', function() {
     });
 
     it('should generate the correct voice command', function(done) {
-      var speech = helpers.remainingChoresToString(user.children[0].chores);
+      var speech = helpers.remainingChoresToString([{
+        index: 1,
+        chore: user.children[0].chores[0]
+      },{
+        index: 3,
+        chore: user.children[0].chores[2]
+      }]);
       expect(speech).to.equal('1: Buy candy at duty free... ' +
                               '3: Enjoy the two hours of daylight... ');
       done();
