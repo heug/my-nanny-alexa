@@ -113,7 +113,6 @@ var registerIntentHandlers = function(app) {
 
       rp(api.getUser(session.user.accessToken))
       .then(function(user) {
-        user = JSON.parse(user);
 
         var child = helpers.getUsersChild(user, childName);
         if(child === undefined) {
@@ -138,8 +137,8 @@ var registerIntentHandlers = function(app) {
       }).then(function(updatedChore) {
         return res.tell(helpers.randomize(completions) + 'chore number ' + choreNum + ', ' 
                 + status + '...' + helpers.randomize(congratulations));
-      }).catch(function(error) {
-        return res.tell(error);
+      }).catch(function(msg) {
+        return res.tell(msg);
       });
 
     },
