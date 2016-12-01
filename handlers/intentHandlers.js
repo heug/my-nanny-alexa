@@ -11,7 +11,7 @@ var registerIntentHandlers = function(app) {
 
     CheckInIntent: function (intent, session, res) {
       var childName = intent.slots.FIRSTNAME.value;
-
+      
       rp.get(api.getUser(session.user.accessToken).uri)
       .then(function(user) {
         user = JSON.parse(user);
@@ -31,10 +31,11 @@ var registerIntentHandlers = function(app) {
 
         var repromptOutput = 'If you\'d like to receive a list of chores on your phone, ' +
                              'please say, send chores.';
-        var choresAsString = helpers.remainingChoresToString(child.chores);
+        var choresAsString = helpers.remainingChoresToString(remainingChores);
         return res.ask(speechOutput + choresAsString, repromptOutput);
       })
       .catch(function(err) {
+        console.log('error', err);
         return res.tell(err);
       });
     },
