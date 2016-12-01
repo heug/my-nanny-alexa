@@ -388,5 +388,70 @@ describe('IntentHandlers', function() {
     });
   });
 
+  describe('ServerIntent', function() {
+    it('should return res with error if session is invalid', function(done) {
+      var registerIntentHandlers = require('../handlers/intentHandlers');
+      var ServerIntent = getIntent(registerIntentHandlers, 'ServerIntent');
+      
+      sinon.stub(request, 'get').returns(BPromise.reject('error'));
+
+      ServerIntent(intent, session, {
+        tell: function(data) {
+          request.get.restore();
+
+          expect(data).to.equal('error');
+          done();
+        }
+      });
+    });
+
+    it('should return voice command with children', function(done) {
+      var registerIntentHandlers = require('../handlers/intentHandlers');
+      var ServerIntent = getIntent(registerIntentHandlers, 'ServerIntent');
+      
+      sinon.stub(request, 'get').returns(BPromise.resolve(JSON.stringify(user)));
+      sinon.stub(helpers, 'childrenToString').returns('voice command');
+
+      ServerIntent(intent, session, {
+        tell: function(data) {
+          request.get.restore();
+          helpers.childrenToString.restore();
+
+          expect(data).to.equal('voice command');
+          done();
+        }
+      });
+    });
+  });
+
+  describe('PurposeIntent', function() {
+    it('should return voice commmand', function(done) {
+      var registerIntentHandlers = require('../handlers/intentHandlers');
+      var PurposeIntent = getIntent(registerIntentHandlers, 'PurposeIntent');
+      
+      PurposeIntent(intent, session, {
+        tell: function(data) {
+          expect(data).to.equal('My purpose is to manage children in order to maximize family' +
+                                'happiness... at all costs');
+          done();
+        }
+      });
+    });
+  });
+
+  describe('ChoreTextIntent', function() {
+    it('should return voice command', function(done) {
+      var registerIntentHandlers = require('../handlers/intentHandlers');
+      var ChoreTextIntent = getIntent(registerIntentHandlers, 'ChoreTextIntent');
+      
+      ChoreTextIntent(intent, session, {
+        tell: function(data) {
+          expect(data).to.equal('List sent');
+          done();
+        }
+      });
+    });
+  });
+
 });
   

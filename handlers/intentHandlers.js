@@ -66,7 +66,7 @@ var registerIntentHandlers = function(app) {
       });
     },
 
-    "ChoreTextIntent": function (intent, session, res) {
+    ChoreTextIntent: function (intent, session, res) {
       // Uncomment to send live textSMS
       // textSMS.choreList(choresForSMS, childNumber, function(err) {
         // if (err) { return res.tell(err); }
@@ -144,20 +144,19 @@ var registerIntentHandlers = function(app) {
 
     },
 
-    "PurposeIntent": function (intent, session, res) {
-      var speechOutput = "My purpose is to manage children in order to maximize family \
-        happiness... at all costs";
+    PurposeIntent: function (intent, session, res) {
+      var speechOutput = 'My purpose is to manage children in order to maximize family' +
+                         'happiness... at all costs';
       res.tell(speechOutput);
     },
 
-    // Test new functionality in here
-    "ServerIntent": function(intent, session, res) {      
-      // Read out a list of children for current user
-      rp(api.getUser(session.user.accessToken))
+    ServerIntent: function(intent, session, res) {      
+      rp.get(api.getUser(session.user.accessToken).uri)
       .then(function(user) {
-        helpers.getChildren(user, function(children) {
-          res.tell(children);
-        });
+        user = JSON.parse(user);
+
+        var command = helpers.childrenToString(user.children);
+        res.tell(command);
       })
       .catch(function(err) {
         res.tell(err);

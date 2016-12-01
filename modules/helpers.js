@@ -14,24 +14,9 @@ helpers.getUsersChild = function(user, childName) {
   };
 };
 
-helpers.choresToString = function(chores) {
-  var speechOutput = '';
-
-  for (var j = 0; j < chores.length; j++) {
-    var taskNum = j + 1;
-    var and = '';
-    if (chores.length > 1 && j === chores.length - 1) {
-      and = 'and ';
-    }
-    speechOutput += and + taskNum + ': ' + chores[j].title + '... ';
-  }
-
-  return speechOutput;
-};
-
 helpers.getChore = function(chores, index) {
   for (var i = 0; i < chores.length; i++) {
-    if (chores[i].index === (index - 1)) {
+    if (chores[i].index === index) {
       return chores[i].chore;
     }
   }
@@ -52,7 +37,6 @@ helpers.getRemainingChores = function(chores) {
   return remainingChores;
 };
 
-// Get a list of all uncompleted chores for a child
 helpers.remainingChoresToString = function(chores) {
   var speechOutput = '';
 
@@ -64,19 +48,18 @@ helpers.remainingChoresToString = function(chores) {
   return speechOutput;
 };
 
-// Return a list of children
-helpers.getChildren = function(user, cb) {
+helpers.childrenToString = function(children) {
   var speechOutput = '';
 
-  for (var i = 0; i < user.children.length; i++) {
+  for (var i = 0; i < children.length; i++) {
     var and = '';
-    if (user.children.length > 1 && i === user.children.length - 1) {
+    if (children.length > 1 && i === children.length - 1) {
       and = 'and ';
     }
-    speechOutput += and + user.children[i].name + '... ';
-   
+    speechOutput += and + children[i].name + '... ';
   }
-  return cb(speechOutput);
+
+  return speechOutput;
 };
 
 module.exports = helpers;

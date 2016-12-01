@@ -65,6 +65,14 @@ var user = {
 };
 
 describe('Helpers', function() {
+  describe('randomize', function() {
+    it('should return a string from the array', function(done) {
+      var word = helpers.randomize(['one element']);
+      expect(word).to.equal('one element');
+      done();
+    });
+  });
+
   describe('getUsersChild', function() {
 
     it('should return user object if name match', function(done) {
@@ -82,39 +90,24 @@ describe('Helpers', function() {
     });
   });
 
-  describe('choresToString', function() {
-    it('should return empty string for empty list', function(done) {
-      var speech = helpers.choresToString([]);
-      expect(speech).to.equal('');
+  describe('getChore', function() {
+    it('should return undefined if chore not found', function(done) {
+      var chore = helpers.getChore([{index: 1}], 2);
+      expect(chore).to.equal(undefined);
       done();
     });
 
-    it('should return correct string for one chore', function(done) {
-      var speech = helpers.choresToString([
-        user.children[0].chores[0]
-      ]);
-
-      expect(speech).to.equal('1: Buy candy at duty free... ');
+    it('should return chore object if found', function(done) {
+      var chore = helpers.getChore([{index: 1, chore: {title: 'correct'}}], 1);
+      expect(chore.title).to.equal('correct');
       done();
     });
 
-    it('should return correct string for two chores', function(done) {
-      var speech = helpers.choresToString([
-        user.children[0].chores[0],
-        user.children[0].chores[1]
-      ]);
-
-      expect(speech).to.equal('1: Buy candy at duty free... and ' +
-                              '2: Go for a ski... ');
-      done();
-    });
-
-    it('should return correct string for tree chores', function(done) {
-      var speech = helpers.choresToString(user.children[0].chores);
-
-      expect(speech).to.equal('1: Buy candy at duty free... ' +
-                              '2: Go for a ski... and ' + 
-                              '3: Enjoy the two hours of daylight... ');
+    it('should find correct chore in list', function(done) {
+      var chore = helpers.getChore([{index: 1, chore: {title: 'incorrect'}},
+                                    {index: 2, chore: {title: 'incorrect'}},
+                                    {index: 3, chore: {title: 'correct'}}], 3);
+      expect(chore.title).to.equal('correct');
       done();
     });
   });
@@ -151,6 +144,38 @@ describe('Helpers', function() {
       }]);
       expect(speech).to.equal('1: Buy candy at duty free... ' +
                               '3: Enjoy the two hours of daylight... ');
+      done();
+    });
+  });
+
+  describe('childrenToString', function() {
+    it('should return empty string if list is empty', function(done) {
+      var speech = helpers.childrenToString([]);
+      expect(speech).to.equal('');
+      done();
+    });
+
+    it('should return correct voice command for one child', function(done) {
+      var speech = helpers.childrenToString([{ name: 'Batman' }]);
+      expect(speech).to.equal('Batman... ');
+      done();
+    });
+
+
+    it('should return correct voice command for two children', function(done) {
+      var speech = helpers.childrenToString([{ name: 'Batman' },
+                                             { name: 'Joker' }]);
+      
+      expect(speech).to.equal('Batman... and Joker... ');
+      done();
+    });
+
+
+    it('should return correct voice command for three children', function(done) {
+      var speech = helpers.childrenToString([{ name: 'Batman' },
+                                             { name: 'Joker' },
+                                             { name: 'Harley Quinn' }]);
+      expect(speech).to.equal('Batman... Joker... and Harley Quinn... ');
       done();
     });
   });
