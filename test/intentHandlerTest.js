@@ -78,7 +78,6 @@ describe('IntentHandlers', function() {
 
       checkInIntent(intent, session, {
         tell: function(data) {
-          console.log(data);
           request.get.restore();
           helpers.getUsersChild.restore();
           helpers.getRemainingChores.restore();
@@ -215,7 +214,6 @@ describe('IntentHandlers', function() {
 
       ChoreListIntent(intent, session, {
         tell: function(data) {
-          console.log(data);
           request.get.restore();
           helpers.getUsersChild.restore();
           helpers.getRemainingChores.restore();
@@ -311,5 +309,84 @@ describe('IntentHandlers', function() {
       });
     });
   });
+
+  describe('FinishChoreIntent', function() {
+    it('should return res with error if session is invalid', function(done) {
+      var registerIntentHandlers = require('../handlers/intentHandlers');
+      var ChoreDetailsIntent = getIntent(registerIntentHandlers, 'FinishChoreIntent');
+      
+      sinon.stub(request, 'get').returns(BPromise.reject('error'));
+
+      ChoreDetailsIntent(intent, session, {
+        tell: function(data) {
+          request.get.restore();
+
+          expect(data).to.equal('error');
+          done();
+        }
+      });
+    });
+
+    it('should return voice command for unrecognized child', function(done) {
+      var registerIntentHandlers = require('../handlers/intentHandlers');
+      var ChoreDetailsIntent = getIntent(registerIntentHandlers, 'FinishChoreIntent');
+      
+      sinon.stub(request, 'get').returns(BPromise.resolve(JSON.stringify(user)));
+      sinon.stub(helpers, 'getUsersChild').returns(undefined);
+
+      ChoreDetailsIntent(intent, session, {
+        tell: function(data) {
+          request.get.restore();
+          helpers.getUsersChild.restore();
+
+          expect(data).to.equal('Batman, is not a recognized child, please try again');
+          done();
+        }
+      });
+    });
+
+    it('should return voice command for no more chores', function(done) {
+      var registerIntentHandlers = require('../handlers/intentHandlers');
+      var ChoreDetailsIntent = getIntent(registerIntentHandlers, 'FinishChoreIntent');
+      
+      sinon.stub(request, 'get').returns(BPromise.resolve(JSON.stringify(user)));
+      sinon.stub(helpers, 'getUsersChild').returns({});
+      sinon.stub(helpers, 'getRemainingChores').returns([]);
+
+      ChoreDetailsIntent(intent, session, {
+        tell: function(data) {
+          request.get.restore();
+          helpers.getUsersChild.restore();
+          helpers.getRemainingChores.restore();
+
+          expect(data).to.equal('Batman, you have no chores today!');
+          done();
+        }
+      });
+    });
+
+    it('should return voice command for previously completed chore', function(done) {
+      var registerIntentHandlers = require('../handlers/intentHandlers');
+      var ChoreDetailsIntent = getIntent(registerIntentHandlers, 'FinishChoreIntent');
+      
+      sinon.stub(request, 'get').returns(BPromise.resolve(JSON.stringify(user)));
+      sinon.stub(helpers, 'getUsersChild').returns({});
+      sinon.stub(helpers, 'getRemainingChores').returns([{}]);
+      sinon.stub(helpers, 'getChore').returns(undefined);
+
+      ChoreDetailsIntent(intent, session, {
+        tell: function(data) {
+          request.get.restore();
+          helpers.getUsersChild.restore();
+          helpers.getRemainingChores.restore();
+          helpers.getChore.restore();
+
+          expect(data).to.equal('Chore 1 has already been completed!');
+          done();
+        }
+      });
+    });
+  });
+
 });
   

@@ -3,6 +3,7 @@ var rp = require('request-promise');
 var textSMS = require('../ext/twilio');
 var helpers = require('../modules/helpers');
 var api = require('../modules/api');
+var Promise = require('bluebird');
 
 var registerIntentHandlers = function(app) {
 
@@ -100,10 +101,7 @@ var registerIntentHandlers = function(app) {
       });
     },
 
-    "FinishChoreIntent": function (intent, session, res) {
-      var completions = ["You finished ", "You're done "];
-      var congratulations = ["Congratulations!", "Good job!", 
-        "Great work!", "Way to go!", "Keep it up!"];
+    FinishChoreIntent: function (intent, session, res) {
       
       var childName = intent.slots.FIRSTNAME.value;
       var choreNum = intent.slots.CHORE.value;
@@ -114,53 +112,36 @@ var registerIntentHandlers = function(app) {
 
         var child = helpers.getUsersChild(user, childName);
         if (child === undefined) {
-          return res.tell(childName + ", is not a recognized child, please try again");
+          return Promise.reject(childName + ", is not a recognized child, please try again");
         }
 
         var remainingChores = helpers.getRemainingChores(child.chores);
         if (remainingChores.length === 0) {
-          return res.tell(speechOutput += 'you have no chores today!');
+          return Promise.reject(childName + ', you have no chores today!');
         }
 
         var chore = helpers.getChore(remainingChores, choreNum);
         if (chore === undefined) {
-          return res.tell('Chore ' + choreNum + ' has already been completed!');
+          return Promise.reject('Chore ' + choreNum + ' has already been completed!');
         }
 
-        res.tell('change status');
+        return rp(api.putChore(session.user.accessToken, child.id, chore.id));
+      }).then(function(updatedChore) {
+        var completions = ["You finished", "You're done"];
+        var congratulations = ["Congratulations!",
+                               "Good job!",
+                               "Great work!",
+                               "Way to go!",
+                               "Keep it up!"];
 
+        return res.tell(res.tell(helpers.randomize(completions) +
+                                 ' chore number ' +
+                                 choreNum + ', ' +
+                                 helpers.randomize(congratulations)));
       }).catch(function(error) {
         res.tell(error);
       });
 
-/*
-      rp(api.getUser(session.user.accessToken))
-      .then(function(user) {
-        helpers.finishChore(user, childName, choreNum, function(status, data) {
-          if (status === '') {
-            res.tell(childName + ", is not a recognized child, please try again.");
-          } else if (status === null) {
-            res.tell('You have no chores to complete!');
-          } else if (status === undefined) {
-            res.tell('Chore ' + choreNum + ' does not exist!');
-          } else if (status === false) {
-            res.tell('Chore ' + choreNum + ' has already been completed!');
-          } else {
-            rp(api.putChore(session.user.accessToken, data.childId, data.choreId))
-            .then(function() {
-              res.tell(helpers.randomize(completions) + 'chore number ' + choreNum + ', ' 
-                + status + '...' + helpers.randomize(congratulations));
-            })
-            .catch(function() {
-              res.tell('Error updating chore status');
-            })
-          }
-        });
-      })
-      .catch(function(err) {
-        res.tell(err);
-      });
-*/
     },
 
     "PurposeIntent": function (intent, session, res) {

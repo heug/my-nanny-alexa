@@ -43,7 +43,7 @@ helpers.getRemainingChores = function(chores) {
   for (var i = 0; i < chores.length; i++) {
     if (!chores[i].completed) {
       remainingChores.push({
-        index: i,
+        index: i + 1,
         chore: chores[i]
       });
     }
@@ -62,29 +62,6 @@ helpers.remainingChoresToString = function(chores) {
   }
 
   return speechOutput;
-};
-
-// Get the referenced chore and cb with name and data for chore PUT
-helpers.finishChore = function(user, childName, choreNum, cb) {
-  for (var i = 0; i < user.children.length; i++) {
-    if (user.children[i].name === childName) {
-      if (user.children[i].chores.length === 0) {
-        return cb(null);
-      }
-      if (user.children[i].chores[choreNum - 1].completed === undefined) {
-        return cb(undefined);
-      } else if (user.children[i].chores[choreNum - 1].completed) {
-        return cb(false);
-      } else {
-        var data = {
-          childId: user.children[i].id,
-          choreId: user.children[i].chores[choreNum - 1].id
-        }
-        return cb(user.children[i].chores[choreNum - 1].title, data);
-      }
-    }
-  }
-  return cb('');
 };
 
 // Return a list of children
