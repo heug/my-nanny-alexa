@@ -4,7 +4,7 @@ var api = {};
 api.getUser = function(token) {
   return {
     method: 'GET',
-    uri: 'https://api.my-nanny.org/api/account?access_token=' + token,
+    uri: 'https://api.my-nanny.org/api/alexa?access_token=' + token,
     json: true
   };
 };
